@@ -16,6 +16,12 @@ public class Node implements Comparable<Node> {
         this.childArray = new ArrayList<>();
     }
 
+    public Node(Joueur joueur) {
+        this.uctScore = 0;
+        this.childArray = new ArrayList<>();
+        this.joueur = joueur;
+    }
+
     public Node(Coup coup, Node parent, Joueur joueur) {
         this.uctScore = 0;
         this.joueur = joueur;

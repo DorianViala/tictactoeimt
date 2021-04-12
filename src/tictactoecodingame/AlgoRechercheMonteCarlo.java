@@ -15,7 +15,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         rnd = new Random();
         this.ennemi = ennemi;
         this.bot = bot;
-        this.max_iteration = 1000;
+        this.max_iteration = 5000;
     }
 
     public AlgoRechercheMonteCarlo(int max_iteration, Joueur ennemi) {
@@ -43,9 +43,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         // on selection a chaque depth
         while (!root.getChildArray().isEmpty()) {
             childArray = root.getChildArray();
-            if (root.getCoup() != null) {
-                _plateau.joueCoup(root.getCoup());
-            }
+
             // update all uct scores
             childArray.forEach(node -> {
                 node.updateUctScore(Math.sqrt(2));
@@ -61,20 +59,9 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
             // 00System.out.println("\n----------\n");
 
             // get node with max uct score
-            // root = Collections.max(childArray);
-            double max = -1;
-            Node finalNode = new Node();
-            for (int i = 0; i < childArray.size(); i++) {
-                if (childArray.get(i).getUCT() > max) {
-                    max = childArray.get(i).getUCT();
-                    finalNode = childArray.get(i);
-                }
-            }
-            root = finalNode;
-            // System.out.println(root);
+            root = Collections.max(childArray);
+            _plateau.joueCoup(root.getCoup());
         }
-        // System.out.println("selected : " + root);
-        _plateau.joueCoup(root.getCoup());
         return root;
     }
 
@@ -86,6 +73,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
             ArrayList<Coup> listeCoups = _plateau.getListeCoups(_joueur);
             ArrayList<Node> newArrayChild = new ArrayList<Node>();
             Joueur joueurEnCours = getJoueurEnnemi(node.getJoueur());
+
             // System.out.println("nouvelle expension");
             // System.out.println("nbre coup possible" +
             // _plateau.getListeCoups(_joueur).size());
@@ -107,7 +95,6 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         Joueur joueurEnCours = node.getJoueur();
         Random coup = new Random();
         if (_plateau.vainqueur() == this.ennemi) {
-            node.setMinimumValeur();
             return _plateau.vainqueur();
         }
         while (!_plateau.partieTerminee()) {
@@ -157,8 +144,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
 
     @Override
     public Coup meilleurCoup(Plateau _plateau, Joueur _joueur, boolean _ponder) {
-
-        Arbre arbre = new Arbre();
+        Arbre arbre = new Arbre(this.ennemi);
         Node root = arbre.getRoot();
         root.incrementNbVisite();
         Joueur gagnant;

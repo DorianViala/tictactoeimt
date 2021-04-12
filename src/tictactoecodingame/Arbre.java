@@ -3,8 +3,8 @@ package tictactoecodingame;
 public class Arbre {
     Node root;
 
-    public Arbre() {
-        root = new Node();
+    public Arbre(Joueur joueur) {
+        root = new Node(joueur);
     }
 
     public Node getRoot() {
