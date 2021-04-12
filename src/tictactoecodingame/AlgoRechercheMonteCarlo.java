@@ -93,11 +93,25 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         }
     }
 
+    public Node findBestChild(Node root) {
+        ArrayList<Node> children = root.getChildArray();
+        int max = 0;
+        Node bestNode = new Node();
+        for (int i = 0; i < children.size(); i++) {
+            if (children.get(i).getScoreVictoire() > max) {
+                max = children.get(i).getScoreVictoire();
+                bestNode = children.get(i);
+            }
+        }
+        return bestNode;
+    }
+
     @Override
     public Coup meilleurCoup(Plateau _plateau, Joueur _joueur, boolean _ponder) {
 
         Arbre arbre = new Arbre();
         Node root = arbre.getRoot();
+        Joueur gagnant;
         _plateau.sauvegardePosition(0);
         for (int iter = 0; iter < this.max_iteration; iter++) {
             // phase 1 : selection
@@ -106,11 +120,19 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
             // phase 2 : expension
             this.expension(nodeSelectionne, _plateau, _joueur);
 
+            // phase 3 : simmulation
+
+            gagnant = this.simulation(nodeSelectionne, _plateau);
+
+            // phase 4 : backpropagation
+
+            this.backPropagation(nodeSelectionne, gagnant);
             // retore le plateau
             _plateau.restaurePosition(0);
         }
 
-        return coups.get(rnd.nextInt(coups.size()));
+        // fonction qui return
+        return findBestChild(root).getCoup();
     }
 
 }
