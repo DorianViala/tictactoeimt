@@ -106,7 +106,8 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         // permet de simuler une partie à partir de cette node
         Joueur joueurEnCours = node.getJoueur();
         Random coup = new Random();
-        if (_plateau.partieGagnee()) {
+        if (_plateau.vainqueur() == this.ennemi) {
+            node.setMinimumValeur();
             return _plateau.vainqueur();
         }
         while (!_plateau.partieTerminee()) {
