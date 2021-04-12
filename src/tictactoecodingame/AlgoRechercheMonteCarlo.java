@@ -68,7 +68,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
     private void expension(Node node, Plateau _plateau, Joueur _joueur) {
         // on expend que si on a deja visite la node
         // sinon on rollout sur cette node
-        if (node.getNbVisite() != 0 && !_plateau.partieTerminee()) {
+        if (!_plateau.partieTerminee()) {
 
             ArrayList<Coup> listeCoups = _plateau.getListeCoups(_joueur);
             ArrayList<Node> newArrayChild = new ArrayList<Node>();
@@ -94,9 +94,13 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         // permet de simuler une partie à partir de cette node
         Joueur joueurEnCours = node.getJoueur();
         Random coup = new Random();
+        // a effacer limite
+
         if (_plateau.vainqueur() == this.ennemi) {
+            node.setMinimumValeur();
             return _plateau.vainqueur();
         }
+
         while (!_plateau.partieTerminee()) {
             // changer le jouer en cours
             joueurEnCours = getJoueurEnnemi(joueurEnCours);
@@ -122,7 +126,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
 
             // on vérifie que il n'y a pas eu égalité et si le joueur de node n'est pas le
             // meme que le joueur gagnant
-            if (nodeAux.getJoueur() != joueurGagnant) {
+            if (nodeAux.getJoueur() == joueurGagnant) {
                 nodeAux.incrementScore();
             }
             nodeAux = nodeAux.getParent();
