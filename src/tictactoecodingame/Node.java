@@ -3,7 +3,7 @@ package tictactoecodingame;
 import java.util.ArrayList;
 
 public class Node {
-    private int nbVisite; 
+    private int nbVisite;
     private int scoreVictoire;
     private Coup coup;
     private Node parent;
@@ -13,25 +13,21 @@ public class Node {
         this.childArray = new ArrayList<>();
     }
 
-    public Node(Coup coup, Node parent){
+    public Node(Coup coup, Node parent) {
         this.coup = coup;
         this.parent = parent;
         this.childArray = new ArrayList<>();
-    }
-
-    public State getState() {
-        return this.state;
     }
 
     public Node getParent() {
         return this.parent;
     }
 
-    public int getNbVisite(){
+    public int getNbVisite() {
         return this.nbVisite;
     }
 
-    public int getScoreVictoire(){
+    public int getScoreVictoire() {
         return this.scoreVictoire;
     }
 
@@ -41,5 +37,9 @@ public class Node {
 
     public void setChildArray(ArrayList<Node> childArray) {
         this.childArray = childArray;
+    }
+
+    public Coup getCoup() {
+        return this.coup;
     }
 }
