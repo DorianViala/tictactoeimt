@@ -66,13 +66,16 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
 
         Arbre arbre = new Arbre();
         Node root = arbre.getRoot();
-
+        _plateau.sauvegardePosition(0);
         for (int iter = 0; iter < this.max_iteration; iter++) {
-            // selection
+            // phase 1 : selection
             Node nodeSelectionne = this.selection(root);
 
-            // expension
+            // phase 2 : expension
             this.expension(nodeSelectionne, _plateau, _joueur);
+
+            // retore le plateau
+            _plateau.restaurePosition(0);
         }
 
         return coups.get(rnd.nextInt(coups.size()));
