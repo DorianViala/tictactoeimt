@@ -38,8 +38,8 @@ public class State {
         this.nbDeVisite++;
     }
 
-    public void plateauPartieEnCours(){
-        if (plateau.partieTerminee()){
+    public boolean plateauPartieEnCours() {
+        if (plateau.partieTerminee()) {
             return false;
         }
         return true;
