@@ -15,7 +15,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         rnd = new Random();
         this.ennemi = ennemi;
         this.bot = bot;
-        this.max_iteration = 1000;
+        this.max_iteration = 10000;
     }
 
     public AlgoRechercheMonteCarlo(int max_iteration, Joueur ennemi) {
@@ -27,6 +27,12 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
     private Node selection(Node n) {
         Node root = n;
         ArrayList<Node> childArray = new ArrayList<Node>();
+
+        // au début, la node root n'a pas de fils
+        if (root.getChildArray().isEmpty()) {
+            return root;
+        }
+
         // on selection a chaque depth
         while (!root.getChildArray().isEmpty()) {
             childArray = root.getChildArray();
@@ -110,6 +116,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
 
         Arbre arbre = new Arbre();
         Node root = arbre.getRoot();
+        root.incrementNbVisite();
         Joueur gagnant;
         _plateau.sauvegardePosition(0);
         for (int iter = 0; iter < this.max_iteration; iter++) {
@@ -120,7 +127,6 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
             this.expension(nodeSelectionne, _plateau, _joueur);
 
             // phase 3 : simmulation
-
             gagnant = this.simulation(nodeSelectionne, _plateau);
 
             // phase 4 : backpropagation
@@ -129,7 +135,6 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
             // retore le plateau
             _plateau.restaurePosition(0);
         }
-
         // fonction qui return
         return findBestChild(root).getCoup();
     }
