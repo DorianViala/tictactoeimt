@@ -28,6 +28,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
     private Node selection(Node n) {
         Node root = n;
         ArrayList<Node> childArray = new ArrayList<Node>();
+        // on selection a chaque depth
         while (!root.getChildArray().isEmpty()) {
             childArray = root.getChildArray();
 
@@ -41,6 +42,21 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         }
         return root;
     }
+
+    private void expension(Node node, Plateau _plateau, Joueur _joueur) {
+        // on expend que si on a deja visite la node
+        // sinon on rollout sur cette node
+        if (node.getNbVisite() != 0) {
+            ArrayList<Coup> listeCoups = _plateau.getListeCoups(_joueur);
+            ArrayList<Node> newArrayChild = new ArrayList<Node>();
+            listeCoups.forEach(coup -> {
+                Node tmpNode = new Node(coup, node.getParent());
+                newArrayChild.add(tmpNode);
+            });
+            node.setChildArray(newArrayChild);
+        }
+    }
+
     // phase 4 : backpropagation
 
     private void backPropagation(Node node, Joueur joueur)
@@ -56,7 +72,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
             Node nodeSelectionne = this.selection(root);
 
             // expension
-            this.expension(nodeSelectionne);
+            this.expension(nodeSelectionne, _plateau, _joueur);
         }
 
         return coups.get(rnd.nextInt(coups.size()));
