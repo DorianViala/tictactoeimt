@@ -13,73 +13,83 @@ import java.util.ArrayList;
  */
 public class AlgoMinimax extends AlgoRecherche {
 
-    public AlgoMinimax() {
+    private Joueur joueurMax;
+    private Joueur joueurMin;
+
+    public AlgoMinimax(Joueur _joueur1, Joueur _joueur2) {
+        this.joueurMax = _joueur1;
+        this.joueurMin = _joueur2;
+
     }
 
-    public int eval(Plateau _plateau, Joueur _joueur) {
-        if (_plateau.partieGagnee()) {
-            return 1;
-        } else if (!_plateau.partieGagnee()) {
-            return -1;
-        } else {
+    public int eval(Plateau _plateau) {
+        if (_plateau.partieNulle()) {
             return 0;
         }
 
+        if (_plateau.vainqueur() == joueurMax) {
+            return 10;
+        }
+
+        else {
+            return -10;
+        }
     }
 
-    public int minimax(Plateau _plateau, Joueur _joueur, int depth, boolean isMaximizing) {
+    public int minimax(Plateau _plateau, boolean isMaximizing, int depth) {
 
         if (depth == 0 || _plateau.partieTerminee()) {
-            return eval(_plateau, _joueur);
+            return eval(_plateau);
         }
 
         if (isMaximizing) {
-            ArrayList<Coup> coups = _plateau.getListeCoups(_joueur);
-            int maxEval = -10;
-            int eval;
 
-            for (int i = 0; i < coups.size(); i++) {
-                _plateau.joueCoup(coups.get(i));
-                eval = minimax(_plateau, _joueur, depth - 1, false);
+            int maxEval = -100;
+            ArrayList<Coup> coupsMax = _plateau.getListeCoups(joueurMax);
+
+            for (int i = 0; i < coupsMax.size(); i++) {
+                int eval;
+
+                _plateau.joueCoup(coupsMax.get(i));
+                eval = minimax(_plateau, false, depth - 1);
                 _plateau.annuleDernierCoup();
-                maxEval = max(eval, maxEval);
 
+                maxEval = max(eval, maxEval);
             }
 
             return maxEval;
         }
 
         else {
-            ArrayList<Coup> coups = _plateau.getListeCoups(_joueur);
-            int minEval = 10;
-            int eval;
+            int minEval = 100;
+            ArrayList<Coup> coupsMin = _plateau.getListeCoups(joueurMin);
 
-            for (int i = 0; i < coups.size(); i++) {
-                _plateau.joueCoup(coups.get(i));
-                eval = minimax(_plateau, _joueur, depth - 1, true);
+            for (int i = 0; i < coupsMin.size(); i++) {
+                int eval;
+
+                _plateau.joueCoup(coupsMin.get(i));
+                eval = minimax(_plateau, true, depth - 1);
                 _plateau.annuleDernierCoup();
+
                 minEval = min(eval, minEval);
             }
 
             return minEval;
         }
-
     }
 
     @Override
     public Coup meilleurCoup(Plateau _plateau, Joueur _joueur, boolean _ponder) {
 
         ArrayList<Coup> coups = _plateau.getListeCoups(_joueur);
-        int bestScore = -10;
+        int bestScore = -1000;
         int move = 0;
         int score;
 
         for (int i = 0; i < coups.size(); i++) {
-            // jouer ce coup
+
             _plateau.joueCoup(coups.get(i));
-            // evaluer ce coup
-            score = minimax(_plateau, _joueur, 1, true);
-            // restaure le coup
+            score = minimax(_plateau, false, 9);
             _plateau.annuleDernierCoup();
 
             if (score > bestScore) {
@@ -106,4 +116,5 @@ public class AlgoMinimax extends AlgoRecherche {
             return b;
         }
     }
+
 }
