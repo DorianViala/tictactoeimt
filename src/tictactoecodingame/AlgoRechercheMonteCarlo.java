@@ -98,10 +98,18 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         // permet de remonter tout l'arbre et d'y affecter
         // les scores correspondant a chaque node parcourut
         Node nodeAux = node;
+        // int passage = 0;
         while (nodeAux != null) {
             nodeAux.incrementNbVisite();
             // si la node est l'opposant, on augmente son score
-            if (nodeAux.getJoueur() != joueurGagnant) {
+            // passage++;
+            // System.out.println("passage" + passage);
+            // System.out.println("joueur en cours: " + nodeAux.getJoueur());
+            // System.out.println("joueur gagant: " + joueurGagnant);
+
+            // on vérifie que il n'y a pas eu égalité et si le joueur de node n'est pas le
+            // meme que le joueur gagnant
+            if (nodeAux.getJoueur() != joueurGagnant && joueurGagnant != null) {
                 nodeAux.incrementScore();
             }
             nodeAux = nodeAux.getParent();
