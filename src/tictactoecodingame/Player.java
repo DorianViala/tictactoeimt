@@ -20,14 +20,20 @@ public class Player {
 
         GrilleTicTacToe9x9 grille = new GrilleTicTacToe9x9();
 
-        Arbitre a = new Arbitre(grille, joueurOrdi, humain);
+        // Remplacer ici l'algorithme aléatoire par votre algorithme.
+        // Créer une nouvelle classe qui hérite de la class AlgoRecherche
+        AlgoRechercheMonteCarlo monte = new AlgoRechercheMonteCarlo(humain, joueurOrdi); // L'ordinateur joue au hasard
+        joueurOrdi.setAlgoRecherche(monte);
+        GrilleTicTacToe3x3 grille2 = new GrilleTicTacToe3x3();
+
+        Arbitre a = new Arbitre(grille2, joueurOrdi, humain);
 
         a.startNewGame(true); // Demarre une partie en affichant la grille du jeu
 
-        // Pour lancer un tournooi de 1000 parties en affichant la grille du jeu
+        // Pour lancer un tournooi de 100 parties en affichant la grille du jeu
         // a.startTournament(1000 , false);
-    }
 
+    }
 }
 
 /*--------------------------------------------------------*/
