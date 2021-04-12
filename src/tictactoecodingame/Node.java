@@ -30,15 +30,23 @@ public class Node {
         return this.nbVisite;
     }
 
+    public void incrementNbVisite() {
+        this.nbVisite++;
+    }
+
+    public void incrementScore() {
+        this.scoreVictoire++;
+    }
+
     public int getScoreVictoire() {
         return this.scoreVictoire;
     }
 
-    public Coup getCoup(){
+    public Coup getCoup() {
         return this.coup;
     }
 
-    public double getUCT(){
+    public double getUCT() {
         return this.uctScore;
     }
 
@@ -46,7 +54,7 @@ public class Node {
         return this.childArray;
     }
 
-    public void setCoup(Coup coup){
+    public void setCoup(Coup coup) {
         this.coup = coup;
     }
 
@@ -54,8 +62,8 @@ public class Node {
         this.childArray = childArray;
     }
 
-    public void updateUctScore(double C){
-        double exploitation =  this.scoreVictoire / this.nbVisite;
+    public void updateUctScore(double C) {
+        double exploitation = this.scoreVictoire / this.nbVisite;
         double exploration = C * Math.sqrt(Math.log(this.parent.getNbVisite() / this.nbVisite));
         this.uctScore = exploitation + exploration;
     }

@@ -48,6 +48,8 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         }
     }
 
+    // phase 4 : backpropagation
+
     @Override
     public Coup meilleurCoup(Plateau _plateau, Joueur _joueur, boolean _ponder) {
 
@@ -58,7 +60,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
             // selection
             Node nodeSelectionne = this.selection(root);
 
-            // expension 
+            // expension
             this.expension(nodeSelectionne);
         }
 
