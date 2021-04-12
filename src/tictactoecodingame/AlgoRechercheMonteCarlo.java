@@ -15,7 +15,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         rnd = new Random();
         this.ennemi = ennemi;
         this.bot = bot;
-        this.max_iteration = 10000;
+        this.max_iteration = 50;
     }
 
     public AlgoRechercheMonteCarlo(int max_iteration, Joueur ennemi) {
@@ -40,11 +40,16 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
             // update all uct scores
             childArray.forEach(node -> {
                 node.updateUctScore(Math.sqrt(2));
+                System.out.println("node victoire : " + node.getScoreVictoire() + "  node visite : "
+                        + node.getNbVisite() + "   node utc : " + node.getUCT());
             });
+
+            System.out.println("\n----------\n");
 
             // get node with max uct score
             root = Collections.max(childArray);
         }
+        System.out.println("selected : " + root);
         return root;
     }
 
@@ -87,14 +92,20 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
     private void backPropagation(Node node, Joueur joueurGagnant) {
         // permet de remonter tout l'arbre et d'y affecter
         // les scores correspondant a chaque node parcourut
+        System.err.println("a");
         Node nodeAux = node;
+        System.err.println("b");
         while (nodeAux != null) {
-            nodeAux.incrementScore();
+            System.err.println("c");
+            nodeAux.incrementNbVisite();
             // si la node est l'opposant, on augmente son score
+            System.err.println("d");
             if (nodeAux.getJoueur() != joueurGagnant) {
                 nodeAux.incrementScore();
             }
+            System.err.println("e");
             nodeAux = nodeAux.getParent();
+            System.err.println("f");
         }
     }
 
