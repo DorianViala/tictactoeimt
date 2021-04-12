@@ -2,7 +2,7 @@ package tictactoecodingame;
 
 import java.util.ArrayList;
 
-public class Node {
+public class Node implements Comparable<Node> {
     private int nbVisite;
     private int scoreVictoire;
     private double uctScore;
@@ -63,8 +63,23 @@ public class Node {
     }
 
     public void updateUctScore(double C) {
-        double exploitation = this.scoreVictoire / this.nbVisite;
-        double exploration = C * Math.sqrt(Math.log(this.parent.getNbVisite() / this.nbVisite));
-        this.uctScore = exploitation + exploration;
+        if (this.nbVisite == 0) {
+            this.uctScore = Double.MAX_VALUE;
+        } else {
+            double exploitation = this.scoreVictoire / this.nbVisite;
+            double exploration = C * Math.sqrt(Math.log(this.parent.getNbVisite() / this.nbVisite));
+            this.uctScore = exploitation + exploration;
+        }
     }
+
+    @Override
+    public int compareTo(Node o) {
+        if (this.getUCT() > o.getUCT()) {
+            return 1;
+        } else if (this.getUCT() < o.getUCT()) {
+            return -1;
+        }
+        return 0;
+    }
+
 }

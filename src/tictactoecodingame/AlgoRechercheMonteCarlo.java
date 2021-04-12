@@ -25,31 +25,22 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         this.max_iteration = max_iteration;
     }
 
-    private double valeurSelection(int nbTotalVisite, double scoreVictoire, int nodeVisite) {
-        if (nodeVisite == 0) {
-            return Integer.MAX_VALUE;
+    private Node selection(Node n) {
+        Node root = n;
+        ArrayList<Node> childArray = new ArrayList<Node>();
+        while (!root.getChildArray().isEmpty()) {
+            childArray = root.getChildArray();
+
+            // update all uct scores
+            childArray.forEach(node -> {
+                node.updateUctScore(Math.sqrt(2));
+            });
+
+            // get node with max uct score
+            root = Collections.max(childArray);
         }
-        return (scoreVictoire / (double) nodeVisite) + 1.41 * Math.sqrt(Math.log(nbTotalVisite) / (double) nodeVisite);
+        return root;
     }
-
-    private Node selection(Node root){
-        ArrayList<Node> childArray = root.getChildArray();
-        ArrayList<double> uctScores = new ArrayList<double>;
-        childArray.forEach(node -> {
-            double nodeScore = valeurSelection(10, node.getScoreVictoire, node.getNbVisite);
-            uctScores.add(nodeScore);
-        })
-    }
-
-    private void expension(Node node) {
-        if(node.getState().plateauPartieEnCours()){
-           ArrayList<Coup> tousLesCoups = node.getState().getPlateau().getListeCoups();
-           tousLesCoups.forEach(coup ->{
-               Plateau plateauCopy = new GrilleTicTacToe3x3()
-           })
-        }
-    }
-
     // phase 4 : backpropagation
 
     private void backPropagation(Node node, Joueur joueur)
