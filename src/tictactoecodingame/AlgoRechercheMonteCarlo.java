@@ -15,13 +15,20 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         rnd = new Random();
         this.ennemi = ennemi;
         this.bot = bot;
-        this.max_iteration = 50;
+        this.max_iteration = 10000;
     }
 
     public AlgoRechercheMonteCarlo(int max_iteration, Joueur ennemi) {
         rnd = new Random();
         this.ennemi = ennemi;
         this.max_iteration = max_iteration;
+    }
+
+    private Joueur getJoueurEnnemi(Joueur joueurEnCours) {
+        if (joueurEnCours == this.ennemi) {
+            return this.bot;
+        }
+        return this.ennemi;
     }
 
     private Node selection(Node n, Plateau _plateau) {
@@ -61,28 +68,24 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
                 }
             }
             root = finalNode;
-            System.out.println(root);
+            // System.out.println(root);
         }
         // System.out.println("selected : " + root);
+        _plateau.joueCoup(root.getCoup());
         return root;
-    }
-
-    private Joueur getJoueurEnnemi(Joueur joueurEnCours) {
-        if (joueurEnCours == this.ennemi) {
-            return this.bot;
-        }
-        return this.ennemi;
     }
 
     private void expension(Node node, Plateau _plateau, Joueur _joueur) {
         // on expend que si on a deja visite la node
         // sinon on rollout sur cette node
-        if (node.getNbVisite() != 0) {
+        if (node.getNbVisite() != 0 && !_plateau.partieTerminee()) {
+
             ArrayList<Coup> listeCoups = _plateau.getListeCoups(_joueur);
             ArrayList<Node> newArrayChild = new ArrayList<Node>();
             Joueur joueurEnCours = getJoueurEnnemi(node.getJoueur());
             // System.out.println("nouvelle expension");
-            System.out.println("nbre coup possible" + _plateau.getListeCoups(_joueur).size());
+            // System.out.println("nbre coup possible" +
+            // _plateau.getListeCoups(_joueur).size());
             listeCoups.forEach(coup -> {
 
                 Node tmpNode = new Node(coup, node, joueurEnCours);
@@ -91,7 +94,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
                 newArrayChild.add(tmpNode);
             });
             node.setChildArray(newArrayChild);
-            System.out.println("taille enfant node " + node.getChildArray().size());
+            // System.out.println("taille enfant node " + node.getChildArray().size());
 
         }
     }
