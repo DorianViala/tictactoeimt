@@ -57,9 +57,19 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         }
     }
 
-    // phase 4 : backpropagation
-
-    private void backPropagation(Node node, Joueur joueur)
+    private void backPropagation(Node node, Joueur joueurGagnant) {
+        // permet de remonter tout l'arbre et d'y affecter
+        // les scores correspondant a chaque node parcourut
+        Node nodeAux = node;
+        while (nodeAux != null) {
+            nodeAux.incrementScore();
+            // si la node est l'opposant, on augmente son score
+            if (nodeAux.getJoueur() != joueurGagnant) {
+                nodeAux.incrementScore();
+            }
+            nodeAux = nodeAux.getParent();
+        }
+    }
 
     @Override
     public Coup meilleurCoup(Plateau _plateau, Joueur _joueur, boolean _ponder) {

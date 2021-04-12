@@ -8,6 +8,7 @@ public class Node implements Comparable<Node> {
     private double uctScore;
     private Coup coup;
     private Node parent;
+    private Joueur joueur;
     private ArrayList<Node> childArray;
 
     public Node() {
@@ -60,6 +61,14 @@ public class Node implements Comparable<Node> {
 
     public void setChildArray(ArrayList<Node> childArray) {
         this.childArray = childArray;
+    }
+
+    public void setJoueur(Joueur joueur) {
+        this.joueur = joueur;
+    }
+
+    public Joueur getJoueur() {
+        return this.joueur;
     }
 
     public void updateUctScore(double C) {
