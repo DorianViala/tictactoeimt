@@ -83,7 +83,10 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
                 newArrayChild.add(tmpNode);
             }
             node.setChildArray(newArrayChild);
-            node = node.getChildArray().get(rnd.nextInt(node.getChildArray().size()));
+            if (node.getChildArray().size() > 0) {
+                node = node.getChildArray().get(rnd.nextInt(node.getChildArray().size()));
+            }
+
             // System.out.println("taille enfant node " + node.getChildArray().size());
         }
     }
@@ -166,11 +169,9 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
             Random rand = new Random();
             // System.out.println("taille des enfants : " +
             // nodeSelectionne.getChildArray().size());
-            // Node nodeToPlay
-            // =nodeSelectionne.getChildArray().get(rand.nextInt(nodeSelectionne.getChildArray().size()));
 
             // phase 3 : simmulation
-
+            gagnant = this.simulation(nodeSelectionne, _plateau);
             // phase 4 : backpropagation
 
             this.backPropagation(nodeSelectionne, gagnant, _plateau);
