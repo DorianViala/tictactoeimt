@@ -125,6 +125,7 @@ public class AlgoMinimax extends AlgoRecherche {
         return coups.get(move);
     }
 
+    // Fonction max et min
     public int max(int a, int b) {
         if (a >= b) {
             return a;

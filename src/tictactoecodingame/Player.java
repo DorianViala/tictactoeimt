@@ -15,14 +15,7 @@ public class Player {
         JoueurHumain humain = new JoueurHumain("Humain");
         JoueurOrdi joueurOrdi = new JoueurOrdi("Ordi");
 
-        // Remplacer ici l'algorithme aléatoire par votre algorithme.
-        // Créer une nouvelle classe qui hérite de la class AlgoRecherche
-
-        // AlgoRechercheAleatoire alea = new AlgoRechercheAleatoire(); // L'ordinateur
-        // joue au hasard
-        // joueurOrdi.setAlgoRecherche(alea);
-
-        AlgoMinimax minmax = new AlgoMinimax();
+        AlgoMinimax minmax = new AlgoMinimax(joueurOrdi, humain);
         joueurOrdi.setAlgoRecherche(minmax);
 
         GrilleTicTacToe3x3 grille = new GrilleTicTacToe3x3();
@@ -31,7 +24,7 @@ public class Player {
 
         a.startNewGame(true); // Demarre une partie en affichant la grille du jeu
 
-        // Pour lancer un tournooi de 100 parties en affichant la grille du jeu
+        // Pour lancer un tournooi de 1000 parties en affichant la grille du jeu
         // a.startTournament(1000 , false);
     }
 
