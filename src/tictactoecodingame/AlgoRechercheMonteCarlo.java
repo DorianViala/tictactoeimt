@@ -147,8 +147,8 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         int max = 0;
         Node bestNode = new Node();
         for (int i = 0; i < children.size(); i++) {
-            if (children.get(i).getScoreVictoire() > max) {
-                max = children.get(i).getScoreVictoire();
+            if (children.get(i).getNbVisite() > max) {
+                max = children.get(i).getNbVisite();
                 bestNode = children.get(i);
             }
         }
