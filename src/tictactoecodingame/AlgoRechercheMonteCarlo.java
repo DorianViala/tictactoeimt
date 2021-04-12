@@ -15,7 +15,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         rnd = new Random();
         this.ennemi = ennemi;
         this.bot = bot;
-        this.max_iteration = 5000;
+        this.max_iteration = 100000;
     }
 
     public AlgoRechercheMonteCarlo(int max_iteration, Joueur ennemi) {
@@ -40,13 +40,13 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
             return root;
         }
 
-        // on selection a chaque depth
+        // on selection a chaque étage de l'arbre
         while (!root.getChildArray().isEmpty()) {
             childArray = root.getChildArray();
 
             // update all uct scores
             childArray.forEach(node -> {
-                node.updateUctScore(Math.sqrt(2));
+                node.updateUctScore(2);
 
                 /*
                  * System.out.println("node victoire : " + node.getScoreVictoire() +
@@ -56,7 +56,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
 
             });
 
-            // 00System.out.println("\n----------\n");
+            // System.out.println("\n----------\n");
 
             // get node with max uct score
             root = Collections.max(childArray);
@@ -159,9 +159,13 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
 
             // phase 2 : expension
             this.expension(nodeSelectionne, _plateau, _joueur);
+            Random rand = new Random();
+            // System.out.println("taille des enfants : " +
+            // nodeSelectionne.getChildArray().size());
+            // Node nodeToPlay
+            // =nodeSelectionne.getChildArray().get(rand.nextInt(nodeSelectionne.getChildArray().size()));
 
             // phase 3 : simmulation
-            gagnant = this.simulation(nodeSelectionne, _plateau);
 
             // phase 4 : backpropagation
 
