@@ -77,7 +77,7 @@ public class Node implements Comparable<Node> {
             this.uctScore = Double.MAX_VALUE;
         } else {
             double exploitation = this.scoreVictoire / this.nbVisite;
-            double exploration = C * Math.sqrt(Math.log(this.parent.getNbVisite() / this.nbVisite));
+            double exploration = C * Math.sqrt(Math.log(this.parent.getNbVisite()) / this.nbVisite);
             this.uctScore = exploitation + exploration;
         }
     }
