@@ -44,6 +44,12 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         return new Node();
     }
 
+    private void expension(Node node) {
+        if(node.getState().plateauPartieEnCours()){
+            System.out.println("fait des trucs");
+        }
+    }
+
     @Override
     public Coup meilleurCoup(Plateau _plateau, Joueur _joueur, boolean _ponder) {
 
@@ -54,7 +60,11 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
 
         ArrayList<Coup> coups = _plateau.getListeCoups(_joueur);
         for (int iter = 0; iter < this.max_iteration; iter++) {
+            // selection
             Node nodeSelectionne = this.selection(root);
+
+            // expension 
+            this.expension(nodeSelectionne);
         }
 
         return coups.get(rnd.nextInt(coups.size()));

@@ -37,4 +37,11 @@ public class State {
     public void incrementVisit() {
         this.nbDeVisite++;
     }
+
+    public void plateauPartieEnCours(){
+        if (plateau.partieTerminee()){
+            return false;
+        }
+        return true;
+    }
 }
