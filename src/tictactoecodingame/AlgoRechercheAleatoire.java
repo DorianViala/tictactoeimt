@@ -25,6 +25,9 @@ public class AlgoRechercheAleatoire extends AlgoRecherche{
     public Coup meilleurCoup(Plateau _plateau, Joueur _joueur, boolean _ponder) {
         
         ArrayList<Coup> coups = _plateau.getListeCoups(_joueur);
+
+        // System.out.println("cours : " + coups);
+        // cours : [(0,0), (0,1), (0,2), (1,0), (1,1), (1,2), (2,0), (2,1), (2,2)]
         
         return coups.get(rnd.nextInt( coups.size()));
     }

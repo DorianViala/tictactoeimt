@@ -46,7 +46,10 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
 
     private void expension(Node node) {
         if(node.getState().plateauPartieEnCours()){
-            System.out.println("fait des trucs");
+           ArrayList<Coup> tousLesCoups = node.getState().getPlateau().getListeCoups();
+           tousLesCoups.forEach(coup ->{
+               Plateau plateauCopy = new GrilleTicTacToe3x3()
+           })
         }
     }
 

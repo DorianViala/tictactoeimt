@@ -3,12 +3,19 @@ package tictactoecodingame;
 import java.util.ArrayList;
 
 public class Node {
-    private State state;
+    private int nbVisite; 
+    private int scoreVictoire;
+    private Coup coup;
     private Node parent;
     private ArrayList<Node> childArray;
 
     public Node() {
-        this.state = new State();
+        this.childArray = new ArrayList<>();
+    }
+
+    public Node(Coup coup, Node parent){
+        this.coup = coup;
+        this.parent = parent;
         this.childArray = new ArrayList<>();
     }
 
