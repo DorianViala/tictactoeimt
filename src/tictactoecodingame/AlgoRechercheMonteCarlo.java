@@ -134,7 +134,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
 
             // on vérifie que il n'y a pas eu égalité et si le joueur de node n'est pas le
             // meme que le joueur gagnant
-            if (nodeAux.getJoueur() != joueurGagnant && joueurGagnant != null) {
+            if (nodeAux.getJoueur() != joueurGagnant) {
                 nodeAux.incrementScore();
             }
             nodeAux = nodeAux.getParent();
