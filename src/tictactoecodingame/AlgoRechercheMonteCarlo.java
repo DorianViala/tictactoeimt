@@ -57,6 +57,28 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         }
     }
 
+    private Joueur simulation(Node node, Plateau _plateau) {
+        // permet de simuler une partie à partir de cette node
+        Joueur joueurEnCours = node.getJoueur();
+        Random coup = new Random();
+        if (_plateau.partieGagnee()) {
+            return _plateau.vainqueur();
+        }
+        while (!_plateau.partieTerminee()) {
+            // changer le jouer en cours
+            if (joueurEnCours == this.ennemi) {
+                joueurEnCours = this.bot;
+            } else {
+                joueurEnCours = this.ennemi;
+            }
+            ArrayList<Coup> coupPossible = _plateau.getListeCoups(joueurEnCours);
+
+            // joue un coup aléatoire
+            _plateau.joueCoup(coupPossible.get(coup.nextInt(coupPossible.size())));
+        }
+        return _plateau.vainqueur();
+    }
+
     private void backPropagation(Node node, Joueur joueurGagnant) {
         // permet de remonter tout l'arbre et d'y affecter
         // les scores correspondant a chaque node parcourut
