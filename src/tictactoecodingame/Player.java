@@ -12,20 +12,25 @@ public class Player {
 
     public static void main(String args[]) {
 
-        JoueurHumain humain = new JoueurHumain("Humain");
-        JoueurOrdi joueurOrdi = new JoueurOrdi("Ordi");
+        System.out.println(Runtime.getRuntime().availableProcessors());
 
-        AlgoMinimax9x9 minmax = new AlgoMinimax9x9(joueurOrdi, humain);
+        // JoueurHumain humain = new JoueurHumain("Humain");
+        JoueurOrdi joueurOrdi = new JoueurOrdi("Ordi");
+        JoueurOrdi joueurOrdi2 = new JoueurOrdi("Ordi2");
+
+        AlgoMinimax9x9 minmax = new AlgoMinimax9x9(joueurOrdi, joueurOrdi2);
+        AlgoRechercheAleatoire rand = new AlgoRechercheAleatoire();
+
         joueurOrdi.setAlgoRecherche(minmax);
+        joueurOrdi2.setAlgoRecherche(rand);
 
         GrilleTicTacToe9x9 grille = new GrilleTicTacToe9x9();
 
-        Arbitre a = new Arbitre(grille, joueurOrdi, humain);
-
-        a.startNewGame(true); // Demarre une partie en affichant la grille du jeu
+        Arbitre a = new Arbitre(grille, joueurOrdi, joueurOrdi2);
+        // a.startNewGame(true); // Demarre une partie en affichant la grille du jeu
 
         // Pour lancer un tournooi de 1000 parties en affichant la grille du jeu
-        // a.startTournament(1000 , false);
+        a.startTournament(5, false);
     }
 
 }
