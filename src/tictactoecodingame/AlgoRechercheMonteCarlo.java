@@ -10,10 +10,12 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
 
     private int max_iteration;
     private Joueur ennemi;
+    private Joueur bot;
 
-    public AlgoRechercheMonteCarlo(Joueur ennemi) {
+    public AlgoRechercheMonteCarlo(Joueur ennemi, Joueur bot) {
         rnd = new Random();
         this.ennemi = ennemi;
+        this.bot = bot;
         this.max_iteration = 1000;
     }
 
@@ -49,6 +51,8 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
     }
 
     // phase 4 : backpropagation
+
+    private void backPropagation(Node node, Joueur joueur)
 
     @Override
     public Coup meilleurCoup(Plateau _plateau, Joueur _joueur, boolean _ponder) {
