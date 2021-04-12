@@ -41,7 +41,7 @@ public class AlgoMinimax9x9 extends AlgoRecherche {
         }
     }
 
-    public int minimax(Plateau _plateau, boolean isMaximizing, int depth) {
+    public int minimax(Plateau _plateau, boolean isMaximizing, int depth, int alpha, int beta) {
 
         // Si la partie est terminée, ou si on atteind la profondeur maximale de
         // l'arbre, on évalue le plateau
@@ -62,11 +62,16 @@ public class AlgoMinimax9x9 extends AlgoRecherche {
                 _plateau.joueCoup(coupsMax.get(i));
 
                 // On attribue une valeur
-                eval = minimax(_plateau, false, depth - 1);
+                eval = minimax(_plateau, false, depth - 1, alpha, beta);
                 _plateau.annuleDernierCoup();
 
                 // On garde le plus grand score
                 maxEval = max(eval, maxEval);
+                alpha = max(alpha, eval);
+
+                if (beta <= alpha) {
+                    break;
+                }
             }
 
             // On retourne le plus grand score possible pour chaque coup
@@ -79,18 +84,21 @@ public class AlgoMinimax9x9 extends AlgoRecherche {
             ArrayList<Coup> coupsMin = _plateau.getListeCoups(joueurMin);
 
             // Pour chacuns de ses coups
-            for (int i = 0; i < coupsMin.size(); i++) { // Y'a trop de reset de coups
+            for (int i = 0; i < coupsMin.size(); i++) {
                 int eval;
 
-                _plateau.sauvegardePosition(1);
                 _plateau.joueCoup(coupsMin.get(i));
                 // On attribue un score
-                eval = minimax(_plateau, true, depth - 1);
-                _plateau.restaurePosition(1);
-                // _plateau.annuleDernierCoup();
+                eval = minimax(_plateau, true, depth - 1, alpha, beta);
+                _plateau.annuleDernierCoup();
 
                 // On garde le plus petit score
                 minEval = min(eval, minEval);
+                beta = min(beta, eval);
+
+                if (beta <= alpha) {
+                    break;
+                }
             }
 
             // On retourne le plus petit score possible pour chaque coup
@@ -109,14 +117,12 @@ public class AlgoMinimax9x9 extends AlgoRecherche {
         // On cherche à attribuer à chaque coup un score
         for (int i = 0; i < coups.size(); i++) {
 
-            _plateau.sauvegardePosition(0);
             // On joue ce coup
             _plateau.joueCoup(coups.get(i));
             // On évalue ce coup
-            score = minimax(_plateau, false, 10000);
+            score = minimax(_plateau, false, 2, -20, 20);
             // On reset le coup
-            _plateau.restaurePosition(0);
-            // _plateau.annuleDernierCoup(); // Erreur here
+            _plateau.annuleDernierCoup();
 
             // On cherche le meilleur score, donc le meilleur coup
             if (score > bestScore) {
@@ -126,6 +132,7 @@ public class AlgoMinimax9x9 extends AlgoRecherche {
         }
 
         // On retourne le meilleur coup
+        System.out.println("Coup choisi : " + move);
         return coups.get(move);
     }
 
