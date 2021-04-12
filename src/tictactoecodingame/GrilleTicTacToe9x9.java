@@ -14,16 +14,16 @@ import java.util.ArrayList;
 public class GrilleTicTacToe9x9 extends Plateau {
 
     Jeton[][] grille9x9 = new Jeton[9][9];
-    Jeton[][] grille3x3 = new Jeton[3][3];  // indique si un joueur à gagné un case de la grande grille
+    Jeton[][] grille3x3 = new Jeton[3][3]; // indique si un joueur à gagné un case de la grande grille
 
-    Jeton[][][] grille9x9Sav = new Jeton[100][9][9];  // Pour sauvegarder la position. 100 positions Max
-    Jeton[][][] grille3x3Sav = new Jeton[100][3][3];  // Pour sauvegarder la position
+    Jeton[][][] grille9x9Sav = new Jeton[100][9][9]; // Pour sauvegarder la position. 100 positions Max
+    Jeton[][][] grille3x3Sav = new Jeton[100][3][3]; // Pour sauvegarder la position
     int nbPostionSauvegarde;
 
     CoupTicTacToe dernierCoup;
     CoupTicTacToe dernierCoupSav;
     Joueur vainqueur;
-    boolean grilleGagnee , grilleGagneeSav;  // vrai si dernier coup gagne une grille
+    boolean grilleGagnee, grilleGagneeSav; // vrai si dernier coup gagne une grille
 
     @Override
     public void init() {
@@ -58,13 +58,12 @@ public class GrilleTicTacToe9x9 extends Plateau {
         int x0 = (coup.getColonne() / 3) * 3;
         int y0 = (coup.getLigne() / 3) * 3;
 
-      //  System.out.println("Test grande grille");
+        // System.out.println("Test grande grille");
         if (caseGagnante(grille9x9, x0, y0, coup.getColonne(), coup.getLigne())) {
             grille3x3[coup.getColonne() / 3][coup.getLigne() / 3] = coup.getJeton();
             grilleGagnee = true;
         }
-            
-       
+
     }
 
     @Override
@@ -101,15 +100,15 @@ public class GrilleTicTacToe9x9 extends Plateau {
      * Regarde si le joueur vient de gagner sur une case en 3x3
      *
      * @param _grille soit la grille 9x9 soit la grille 3x3
-     * @param _x0 x min de la grille à analyser
-     * @param _y0 y min de la grille à analyser
-     * @param _coupX où le joueur a joué
+     * @param _x0     x min de la grille à analyser
+     * @param _y0     y min de la grille à analyser
+     * @param _coupX  où le joueur a joué
      * @param _coupY
      * @return
      */
     public boolean caseGagnante(Jeton[][] _grille, int _x0, int _y0, int _coupX, int _coupY) {
-        int[][] dir = {{1, 0}, {1, 1}, {0, 1}, {1, -1}};
-        int[][] dirOps = {{-1, 0}, {-1, -1}, {0, -1}, {-1, 1}};
+        int[][] dir = { { 1, 0 }, { 1, 1 }, { 0, 1 }, { 1, -1 } };
+        int[][] dirOps = { { -1, 0 }, { -1, -1 }, { 0, -1 }, { -1, 1 } };
 
         int xMax = _x0 + 3, yMax = _y0 + 3;
 
@@ -125,7 +124,8 @@ public class GrilleTicTacToe9x9 extends Plateau {
             x = _coupX;
             y = _coupY;
 
-            while (x < xMax && x >= _x0 && y < yMax && y >= _y0 && _grille[x][y] != null && _grille[x][y].getJoueur() == dernierJoueur) {
+            while (x < xMax && x >= _x0 && y < yMax && y >= _y0 && _grille[x][y] != null
+                    && _grille[x][y].getJoueur() == dernierJoueur) {
                 nbJetonAligne++;
                 if (nbJetonAligne >= 3) {
                     return true;
@@ -134,12 +134,13 @@ public class GrilleTicTacToe9x9 extends Plateau {
                 y += dir[d][1];
             }
 
-            //regarde dans la direction opposée
+            // regarde dans la direction opposée
             x = _coupX;
             y = _coupY;
             nbJetonAligne--;
 
-            while (x < xMax && x >= _x0 && y < yMax && y >= _y0 && _grille[x][y] != null && _grille[x][y].getJoueur() == dernierJoueur) {
+            while (x < xMax && x >= _x0 && y < yMax && y >= _y0 && _grille[x][y] != null
+                    && _grille[x][y].getJoueur() == dernierJoueur) {
                 nbJetonAligne++;
                 if (nbJetonAligne >= 3) {
                     return true;
@@ -159,9 +160,10 @@ public class GrilleTicTacToe9x9 extends Plateau {
             return false;
         }
 
-        if ( grilleGagnee) { // si le dernier coup a gagne une grille on regarde si on gagne sur la grande grille
+        if (grilleGagnee) { // si le dernier coup a gagne une grille on regarde si on gagne sur la grande
+                            // grille
             if (caseGagnante(grille3x3, 0, 0, dernierCoup.getColonne() / 3, dernierCoup.getLigne() / 3)) {
-                
+
                 vainqueur = dernierCoup.getJeton().getJoueur();
                 return true;
             }
@@ -219,11 +221,12 @@ public class GrilleTicTacToe9x9 extends Plateau {
         if (dernierCoup != null) {
             int x0 = (dernierCoup.getColonne() % 3) * 3;
             int y0 = (dernierCoup.getLigne() % 3) * 3;
-            
+
             for (int c = x0; c < x0 + 3; c++) {
-                for (int l = y0; l < y0 + 3; l++) {                   
-                    if ( grille3x3[(c/3)][(l/3)] != null ) continue;   // on ne peut pas jouer dans une grille gagnée
-                    
+                for (int l = y0; l < y0 + 3; l++) {
+                    if (grille3x3[(c / 3)][(l / 3)] != null)
+                        continue; // on ne peut pas jouer dans une grille gagnée
+
                     if (grille9x9[c][l] == null) {
                         listeCoups.add(new CoupTicTacToe(c, l, new Jeton(_joueur)));
                     }
@@ -234,7 +237,8 @@ public class GrilleTicTacToe9x9 extends Plateau {
         if (listeCoups.isEmpty()) {
             for (int c = 0; c < this.getNbColonnes(); c++) {
                 for (int l = 0; l < this.getNbLignes(); l++) {
-                    if ( grille3x3[(c/3)][(l/3)] != null ) continue;   // on ne peut pas jouer dans une grille gagnée
+                    if (grille3x3[(c / 3)][(l / 3)] != null)
+                        continue; // on ne peut pas jouer dans une grille gagnée
                     if (grille9x9[c][l] == null) {
                         listeCoups.add(new CoupTicTacToe(c, l, new Jeton(_joueur)));
                     }
@@ -248,31 +252,34 @@ public class GrilleTicTacToe9x9 extends Plateau {
     public boolean isValide(Coup _coup) {
         CoupTicTacToe coup = (CoupTicTacToe) _coup;
 
-        if ( grille9x9[coup.getColonne()][coup.getLigne()] != null ) return false;
-        
-        if ( dernierCoup == null ) return true;
-      
-        int x0 = (dernierCoup.getColonne() % 3 ) * 3;
-        int y0 = (dernierCoup.getLigne() % 3 ) * 3;
-                      
+        if (grille9x9[coup.getColonne()][coup.getLigne()] != null)
+            return false;
+
+        if (dernierCoup == null)
+            return true;
+
+        int x0 = (dernierCoup.getColonne() % 3) * 3;
+        int y0 = (dernierCoup.getLigne() % 3) * 3;
+
         boolean grillePleine = true;
-        
-        for (int c = x0; c < x0+3 ; c++) {
-                for (int l = y0; l < y0+3 ; l++) {
-                    if ( grille3x3[c/3][l/3] != null ) continue;  // les grilles gagneés sont pleines
-                    if ( grille9x9[c][l] == null ) {
-                        grillePleine = false;
-                        break;
-                    }
+
+        for (int c = x0; c < x0 + 3; c++) {
+            for (int l = y0; l < y0 + 3; l++) {
+                if (grille3x3[c / 3][l / 3] != null)
+                    continue; // les grilles gagneés sont pleines
+                if (grille9x9[c][l] == null) {
+                    grillePleine = false;
+                    break;
                 }
+            }
         }
-        
-        if ( grillePleine ) {           
-              return true;
+
+        if (grillePleine) {
+            return true;
         }
-                
-      
-        return ( coup.getColonne() >= x0  && coup.getColonne() < x0+3 &&  coup.getLigne()>= y0  && coup.getLigne() < y0+3 );
+
+        return (coup.getColonne() >= x0 && coup.getColonne() < x0 + 3 && coup.getLigne() >= y0
+                && coup.getLigne() < y0 + 3);
     }
 
     @Override
@@ -284,7 +291,7 @@ public class GrilleTicTacToe9x9 extends Plateau {
     }
 
     @Override
-    public void sauvegardePosition(int _index ) {
+    public void sauvegardePosition(int _index) {
         for (int c = 0; c < this.getNbColonnes(); c++) {
             for (int l = 0; l < this.getNbLignes(); l++) {
                 grille9x9Sav[_index][c][l] = grille9x9[c][l];
@@ -298,13 +305,12 @@ public class GrilleTicTacToe9x9 extends Plateau {
         }
         dernierCoupSav = dernierCoup;
         grilleGagneeSav = grilleGagnee;
-       
 
     }
 
     @Override
-    public void restaurePosition( int _index ) {
-        
+    public void restaurePosition(int _index) {
+
         for (int c = 0; c < this.getNbColonnes(); c++) {
             for (int l = 0; l < this.getNbLignes(); l++) {
                 grille9x9[c][l] = grille9x9Sav[_index][c][l];
@@ -324,8 +330,9 @@ public class GrilleTicTacToe9x9 extends Plateau {
     private boolean isGrillePleine() {
         for (int c = 0; c < this.getNbColonnes(); c++) {
             for (int l = 0; l < this.getNbLignes(); l++) {
-                if ( grille3x3[c/3][l/3] != null ) continue;  // les grilles gagnées sont pleines
-                
+                if (grille3x3[c / 3][l / 3] != null)
+                    continue; // les grilles gagnées sont pleines
+
                 if (grille9x9[c][l] == null) {
                     return false;
                 }
@@ -351,7 +358,7 @@ public class GrilleTicTacToe9x9 extends Plateau {
 
     @Override
     public Coup getDernierCoup() {
-       return dernierCoup;
+        return dernierCoup;
     }
 
 }

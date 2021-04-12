@@ -15,10 +15,10 @@ public class Player {
         JoueurHumain humain = new JoueurHumain("Humain");
         JoueurOrdi joueurOrdi = new JoueurOrdi("Ordi");
 
-        AlgoMinimax minmax = new AlgoMinimax(joueurOrdi, humain);
+        AlgoMinimax9x9 minmax = new AlgoMinimax9x9(joueurOrdi, humain);
         joueurOrdi.setAlgoRecherche(minmax);
 
-        GrilleTicTacToe3x3 grille = new GrilleTicTacToe3x3();
+        GrilleTicTacToe9x9 grille = new GrilleTicTacToe9x9();
 
         Arbitre a = new Arbitre(grille, joueurOrdi, humain);
 

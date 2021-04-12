@@ -11,12 +11,12 @@ import java.util.ArrayList;
  *
  * @author franck.tempet
  */
-public class AlgoMinimax extends AlgoRecherche {
+public class AlgoMinimax9x9 extends AlgoRecherche {
 
     private Joueur joueurMax;
     private Joueur joueurMin;
 
-    public AlgoMinimax(Joueur _joueur1, Joueur _joueur2) {
+    public AlgoMinimax9x9(Joueur _joueur1, Joueur _joueur2) {
         this.joueurMax = _joueur1;
         this.joueurMin = _joueur2;
 
@@ -79,13 +79,15 @@ public class AlgoMinimax extends AlgoRecherche {
             ArrayList<Coup> coupsMin = _plateau.getListeCoups(joueurMin);
 
             // Pour chacuns de ses coups
-            for (int i = 0; i < coupsMin.size(); i++) {
+            for (int i = 0; i < coupsMin.size(); i++) { // Y'a trop de reset de coups
                 int eval;
 
+                _plateau.sauvegardePosition(1);
                 _plateau.joueCoup(coupsMin.get(i));
                 // On attribue un score
                 eval = minimax(_plateau, true, depth - 1);
-                _plateau.annuleDernierCoup();
+                _plateau.restaurePosition(1);
+                // _plateau.annuleDernierCoup();
 
                 // On garde le plus petit score
                 minEval = min(eval, minEval);
@@ -107,12 +109,14 @@ public class AlgoMinimax extends AlgoRecherche {
         // On cherche à attribuer à chaque coup un score
         for (int i = 0; i < coups.size(); i++) {
 
+            _plateau.sauvegardePosition(0);
             // On joue ce coup
             _plateau.joueCoup(coups.get(i));
             // On évalue ce coup
-            score = minimax(_plateau, false, 1);
+            score = minimax(_plateau, false, 10000);
             // On reset le coup
-            _plateau.annuleDernierCoup();
+            _plateau.restaurePosition(0);
+            // _plateau.annuleDernierCoup(); // Erreur here
 
             // On cherche le meilleur score, donc le meilleur coup
             if (score > bestScore) {
