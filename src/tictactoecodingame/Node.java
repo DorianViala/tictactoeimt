@@ -27,6 +27,14 @@ public class Node {
         return this.parent;
     }
 
+    public int getNbVisite(){
+        return this.nbVisite;
+    }
+
+    public int getScoreVictoire(){
+        return this.scoreVictoire;
+    }
+
     public ArrayList<Node> getChildArray() {
         return this.childArray;
     }

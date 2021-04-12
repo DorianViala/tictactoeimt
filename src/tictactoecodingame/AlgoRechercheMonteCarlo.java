@@ -30,18 +30,13 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         return (scoreVictoire / (double) nodeVisite) + 1.41 * Math.sqrt(Math.log(nbTotalVisite) / (double) nodeVisite);
     }
 
-    private Node trouverMeilleurNode(Node node) {
-        int parentVisit = node.getState().getNbDeVisite();
-        return Collections.max(node.getChildArray(), Comparator.comparing(
-                c -> valeurSelection(parentVisit, c.getState().getScoreVictoire(), c.getState().getNbDeVisite())));
-    }
-
-    private Node selection(Node root) {
-        Node node = root;
-        while (node.getChildArray().size() != 0) {
-            node = this.trouverMeilleurNode(root);
-        }
-        return new Node();
+    private Node selection(Node root){
+        ArrayList<Node> childArray = root.getChildArray();
+        ArrayList<double> uctScores = new ArrayList<double>;
+        childArray.forEach(node -> {
+            double nodeScore = valeurSelection(10, node.getScoreVictoire, node.getNbVisite);
+            uctScores.add(nodeScore);
+        })
     }
 
     private void expension(Node node) {
@@ -58,10 +53,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
 
         Arbre arbre = new Arbre();
         Node root = arbre.getRoot();
-        root.getState().setJoueur(ennemi);
-        root.getState().setPlateau(_plateau);
 
-        ArrayList<Coup> coups = _plateau.getListeCoups(_joueur);
         for (int iter = 0; iter < this.max_iteration; iter++) {
             // selection
             Node nodeSelectionne = this.selection(root);
