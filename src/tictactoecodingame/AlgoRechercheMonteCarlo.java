@@ -68,7 +68,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
     private void expension(Node node, Plateau _plateau, Joueur _joueur) {
         // on expend que si on a deja visite la node
         // sinon on rollout sur cette node
-        if (!_plateau.partieTerminee()) {
+        if (!_plateau.partieTerminee() && node.getNbVisite() != 0) {
 
             ArrayList<Coup> listeCoups = _plateau.getListeCoups(_joueur);
             ArrayList<Node> newArrayChild = new ArrayList<Node>();
@@ -77,16 +77,14 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
             // System.out.println("nouvelle expension");
             // System.out.println("nbre coup possible" +
             // _plateau.getListeCoups(_joueur).size());
-            listeCoups.forEach(coup -> {
 
-                Node tmpNode = new Node(coup, node, joueurEnCours);
-                // System.out.println("joueur en, cours : " +
-                // getJoueurEnnemi(node.getJoueur()));
+            for (int i = 0; i < listeCoups.size(); i++) {
+                Node tmpNode = new Node(listeCoups.get(i), node, joueurEnCours);
                 newArrayChild.add(tmpNode);
-            });
+            }
             node.setChildArray(newArrayChild);
+            node = node.getChildArray().get(rnd.nextInt(node.getChildArray().size()));
             // System.out.println("taille enfant node " + node.getChildArray().size());
-
         }
     }
 
@@ -112,12 +110,18 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         return _plateau.vainqueur();
     }
 
-    private void backPropagation(Node node, Joueur joueurGagnant) {
+    private void backPropagation(Node node, Joueur joueurGagnant, Plateau _plateau) {
         // permet de remonter tout l'arbre et d'y affecter
         // les scores correspondant a chaque node parcourut
         Node nodeAux = node;
+        if (_plateau.partieGagnee()) {
+            if (_plateau.vainqueur() == this.ennemi) {
+                nodeAux.setMinimumValeur();
+            }
+        }
         while (nodeAux != null) {
             nodeAux.incrementNbVisite();
+
             // si la node est l'opposant, on augmente son score
             // passage++;
             // System.out.println("passage" + passage);
@@ -126,7 +130,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
 
             // on vérifie que il n'y a pas eu égalité et si le joueur de node n'est pas le
             // meme que le joueur gagnant
-            if (nodeAux.getJoueur() == joueurGagnant) {
+            if (joueurGagnant == this.bot) {
                 nodeAux.incrementScore();
             }
             nodeAux = nodeAux.getParent();
@@ -165,7 +169,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
 
             // phase 4 : backpropagation
 
-            this.backPropagation(nodeSelectionne, gagnant);
+            this.backPropagation(nodeSelectionne, gagnant, _plateau);
             // retore le plateau
             _plateau.restaurePosition(0);
 
