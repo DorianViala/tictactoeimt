@@ -27,6 +27,14 @@ public class Node {
         return this.nbVisite;
     }
 
+    public void incrementNbVisite() {
+        this.nbVisite++;
+    }
+
+    public void incrementScore() {
+        this.scoreVictoire++;
+    }
+
     public int getScoreVictoire() {
         return this.scoreVictoire;
     }
