@@ -34,7 +34,6 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
     private Node selection(Node root, Plateau _plateau) {
         ArrayList<Node> childArray = new ArrayList<Node>();
 
-        // au début, la node root n'a pas de fils
         // on selection a chaque étage de l'arbre
         while (!root.getChildArray().isEmpty()) {
             childArray = root.getChildArray();
@@ -58,16 +57,10 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
             Joueur joueurEnCours = getJoueurEnnemi(node.getJoueur());
             for (int i = 0; i < listeCoups.size(); i++) {
                 Node tmpNode = new Node(listeCoups.get(i), node, joueurEnCours);
-                if (listeCoups.get(i) == null) {
-                    System.out.println("aled");
-                }
                 newArrayChild.add(tmpNode);
             }
             node.setChildArray(newArrayChild);
             return newArrayChild.get(0);
-        }
-        if (node.getCoup() == null) {
-            System.out.println("aled 2");
         }
         return node;
 
