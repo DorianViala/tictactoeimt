@@ -15,7 +15,7 @@ public class Player {
         JoueurOrdi humain = new JoueurOrdi("Humain");
         JoueurOrdi joueurOrdi = new JoueurOrdi("Ordi");
 
-        JoueurHumain moi = new JoueurHumain("enorme sexe");
+        JoueurHumain moi = new JoueurHumain("Romain");
         // AlgoMinimax minmax = new AlgoMinimax(humain, joueurOrdi);
 
         GrilleTicTacToe3x3 grille = new GrilleTicTacToe3x3();
