@@ -15,7 +15,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         rnd = new Random();
         this.ennemi = ennemi;
         this.bot = bot;
-        this.max_iteration = 100000;
+        this.max_iteration = 5000;
     }
 
     public AlgoRechercheMonteCarlo(int max_iteration, Joueur ennemi) {
@@ -35,32 +35,15 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         ArrayList<Node> childArray = new ArrayList<Node>();
 
         // au début, la node root n'a pas de fils
-        /*
-         * if (root.getChildArray().isEmpty()) { return root; }
-         */
-
         // on selection a chaque étage de l'arbre
         while (!root.getChildArray().isEmpty()) {
             childArray = root.getChildArray();
-
             // update all uct scores
             childArray.forEach(node -> {
                 node.updateUctScore(2);
-
-                /*
-                 * System.out.println("node victoire : " + node.getScoreVictoire() +
-                 * " node visite : " + node.getNbVisite() + " node parent : " +
-                 * node.getParent().getNbVisite() + " node utc : " + node.getUCT() + " code " +
-                 * node);
-                 */
-
             });
-
-            // System.out.println("\n----------\n");
-
             // get node with max uct score
             root = Collections.max(childArray);
-            // System.out.println("root selectionne : " + root);
             _plateau.joueCoup(root.getCoup());
         }
         return root;
@@ -70,15 +53,9 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         // on expend que si on a deja visite la node
         // sinon on rollout sur cette node
         if (!_plateau.partieTerminee()) {
-            // System.out.println("----------expension en cours ---------------");
             ArrayList<Coup> listeCoups = _plateau.getListeCoups(_joueur);
             ArrayList<Node> newArrayChild = new ArrayList<Node>();
             Joueur joueurEnCours = getJoueurEnnemi(node.getJoueur());
-
-            // System.out.println("nouvelle expension");
-            // System.out.println("nbre coup possible" +
-            // _plateau.getListeCoups(_joueur).size());
-
             for (int i = 0; i < listeCoups.size(); i++) {
                 Node tmpNode = new Node(listeCoups.get(i), node, joueurEnCours);
                 if (listeCoups.get(i) == null) {
@@ -87,10 +64,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
                 newArrayChild.add(tmpNode);
             }
             node.setChildArray(newArrayChild);
-            // System.out.println("taille des enfants : " + newArrayChild.size());
             return newArrayChild.get(0);
-
-            // System.out.println("taille enfant node " + node.getChildArray().size());
         }
         if (node.getCoup() == null) {
             System.out.println("aled 2");
@@ -103,21 +77,15 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         // permet de simuler une partie à partir de cette node
         Joueur joueurEnCours = node.getJoueur();
         Random coup = new Random();
-        // a effacer limite
-
         _plateau.joueCoup(node.getCoup());
-
-        // _plateau.joueCoup(node.getCoup());
         if (_plateau.vainqueur() == this.ennemi) {
             node.setMinimumValeur();
             return _plateau.vainqueur();
         }
-
         while (!_plateau.partieTerminee()) {
             // changer le jouer en cours
             joueurEnCours = getJoueurEnnemi(joueurEnCours);
             ArrayList<Coup> coupPossible = _plateau.getListeCoups(joueurEnCours);
-
             // joue un coup aléatoire
             _plateau.joueCoup(coupPossible.get(coup.nextInt(coupPossible.size())));
         }
@@ -135,16 +103,10 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         }
         while (nodeAux != null) {
             nodeAux.incrementNbVisite();
-
             // si la node est l'opposant, on augmente son score
-            // passage++;
-            // System.out.println("passage" + passage);
-            // System.out.println("joueur en cours: " + nodeAux.getJoueur());
-            // System.out.println("joueur gagant: " + joueurGagnant);
-
             // on vérifie que il n'y a pas eu égalité et si le joueur de node n'est pas le
             // meme que le joueur gagnant
-            if (joueurGagnant == this.bot) {
+            if (nodeAux.getJoueur() == joueurGagnant && !_plateau.partieNulle()) {
                 nodeAux.incrementScore();
             }
             nodeAux = nodeAux.getParent();
@@ -178,19 +140,16 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
 
             // phase 2 : expension
             newNode = this.expension(nodeSelectionne, _plateau, _joueur);
-            // Random rand = new Random();
-            // System.out.println("taille des enfants : " +
-            // nodeSelectionne.getChildArray().size());
 
             // phase 3 : simmulation
             gagnant = this.simulation(newNode, _plateau);
-            // phase 4 : backpropagation
 
+            // phase 4 : backpropagation
             this.backPropagation(nodeSelectionne, gagnant, _plateau);
             // retore le plateau
+
             _plateau.restaurePosition(0);
 
-            // System.out.println("ITER : " + iter);
         }
         // fonction qui return
         return findBestChild(root).getCoup();
