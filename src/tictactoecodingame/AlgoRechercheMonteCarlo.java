@@ -31,14 +31,13 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         return this.ennemi;
     }
 
-    private Node selection(Node n, Plateau _plateau) {
-        Node root = n;
+    private Node selection(Node root, Plateau _plateau) {
         ArrayList<Node> childArray = new ArrayList<Node>();
 
         // au début, la node root n'a pas de fils
-        if (root.getChildArray().isEmpty()) {
-            return root;
-        }
+        /*
+         * if (root.getChildArray().isEmpty()) { return root; }
+         */
 
         // on selection a chaque étage de l'arbre
         while (!root.getChildArray().isEmpty()) {
@@ -51,7 +50,8 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
                 /*
                  * System.out.println("node victoire : " + node.getScoreVictoire() +
                  * " node visite : " + node.getNbVisite() + " node parent : " +
-                 * node.getParent().getNbVisite() + " node utc : " + node.getUCT());
+                 * node.getParent().getNbVisite() + " node utc : " + node.getUCT() + " code " +
+                 * node);
                  */
 
             });
@@ -60,16 +60,17 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
 
             // get node with max uct score
             root = Collections.max(childArray);
+            // System.out.println("root selectionne : " + root);
             _plateau.joueCoup(root.getCoup());
         }
         return root;
     }
 
-    private void expension(Node node, Plateau _plateau, Joueur _joueur) {
+    private Node expension(Node node, Plateau _plateau, Joueur _joueur) {
         // on expend que si on a deja visite la node
         // sinon on rollout sur cette node
         if (!_plateau.partieTerminee() && node.getNbVisite() != 0) {
-
+            // System.out.println("----------expension en cours ---------------");
             ArrayList<Coup> listeCoups = _plateau.getListeCoups(_joueur);
             ArrayList<Node> newArrayChild = new ArrayList<Node>();
             Joueur joueurEnCours = getJoueurEnnemi(node.getJoueur());
@@ -83,12 +84,13 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
                 newArrayChild.add(tmpNode);
             }
             node.setChildArray(newArrayChild);
-            if (node.getChildArray().size() > 0) {
-                node = node.getChildArray().get(rnd.nextInt(node.getChildArray().size()));
-            }
+            // System.out.println("taille des enfants : " + newArrayChild.size());
+            return newArrayChild.get(0);
 
             // System.out.println("taille enfant node " + node.getChildArray().size());
         }
+        return node;
+
     }
 
     private Joueur simulation(Node node, Plateau _plateau) {
@@ -96,7 +98,10 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         Joueur joueurEnCours = node.getJoueur();
         Random coup = new Random();
         // a effacer limite
-
+        if (node.getCoup() != null) {
+            _plateau.joueCoup(node.getCoup());
+        }
+        // _plateau.joueCoup(node.getCoup());
         if (_plateau.vainqueur() == this.ennemi) {
             node.setMinimumValeur();
             return _plateau.vainqueur();
@@ -157,7 +162,8 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
     public Coup meilleurCoup(Plateau _plateau, Joueur _joueur, boolean _ponder) {
         Arbre arbre = new Arbre(this.ennemi);
         Node root = arbre.getRoot();
-        root.incrementNbVisite();
+        // root.incrementNbVisite();
+        Node newNode;
         Joueur gagnant;
         _plateau.sauvegardePosition(0);
         for (int iter = 0; iter < this.max_iteration; iter++) {
@@ -165,13 +171,13 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
             Node nodeSelectionne = this.selection(root, _plateau);
 
             // phase 2 : expension
-            this.expension(nodeSelectionne, _plateau, _joueur);
-            Random rand = new Random();
+            newNode = this.expension(nodeSelectionne, _plateau, _joueur);
+            // Random rand = new Random();
             // System.out.println("taille des enfants : " +
             // nodeSelectionne.getChildArray().size());
 
             // phase 3 : simmulation
-            gagnant = this.simulation(nodeSelectionne, _plateau);
+            gagnant = this.simulation(newNode, _plateau);
             // phase 4 : backpropagation
 
             this.backPropagation(nodeSelectionne, gagnant, _plateau);

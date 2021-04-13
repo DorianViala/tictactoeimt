@@ -110,7 +110,7 @@ public class AlgoMinimax extends AlgoRecherche {
             // On joue ce coup
             _plateau.joueCoup(coups.get(i));
             // On évalue ce coup
-            score = minimax(_plateau, false, 1);
+            score = minimax(_plateau, false, 10);
             // On reset le coup
             _plateau.annuleDernierCoup();
 

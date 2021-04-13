@@ -15,8 +15,8 @@ public class Player {
         JoueurOrdi humain = new JoueurOrdi("Humain");
         JoueurOrdi joueurOrdi = new JoueurOrdi("Ordi");
 
-        AlgoMinimax minmax = new AlgoMinimax(humain, joueurOrdi);
-        humain.setAlgoRecherche(minmax);
+        JoueurHumain moi = new JoueurHumain("enorme sexe");
+        // AlgoMinimax minmax = new AlgoMinimax(humain, joueurOrdi);
 
         GrilleTicTacToe3x3 grille = new GrilleTicTacToe3x3();
 
@@ -26,12 +26,13 @@ public class Player {
         joueurOrdi.setAlgoRecherche(monte);
         GrilleTicTacToe3x3 grille2 = new GrilleTicTacToe3x3();
 
-        Arbitre a = new Arbitre(grille2, joueurOrdi, humain);
+        Arbitre a = new Arbitre(grille2, joueurOrdi, moi);
 
-        // a.startNewGame(true); // Demarre une partie en affichant la grille du jeu
+        a.startNewGame(true); // Demarre une partie en affichant la grille du jeu
 
         // Pour lancer un tournooi de 100 parties en affichant la grille du jeu
-        a.startTournament(1000 , false);
+        //
+        // a.startTournament(1000, false);
 
     }
 }
