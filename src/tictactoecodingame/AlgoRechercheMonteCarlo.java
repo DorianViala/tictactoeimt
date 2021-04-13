@@ -69,7 +69,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
     private Node expension(Node node, Plateau _plateau, Joueur _joueur) {
         // on expend que si on a deja visite la node
         // sinon on rollout sur cette node
-        if (!_plateau.partieTerminee() && node.getNbVisite() != 0) {
+        if (!_plateau.partieTerminee()) {
             // System.out.println("----------expension en cours ---------------");
             ArrayList<Coup> listeCoups = _plateau.getListeCoups(_joueur);
             ArrayList<Node> newArrayChild = new ArrayList<Node>();
@@ -81,6 +81,9 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
 
             for (int i = 0; i < listeCoups.size(); i++) {
                 Node tmpNode = new Node(listeCoups.get(i), node, joueurEnCours);
+                if (listeCoups.get(i) == null) {
+                    System.out.println("aled");
+                }
                 newArrayChild.add(tmpNode);
             }
             node.setChildArray(newArrayChild);
@@ -88,6 +91,9 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
             return newArrayChild.get(0);
 
             // System.out.println("taille enfant node " + node.getChildArray().size());
+        }
+        if (node.getCoup() == null) {
+            System.out.println("aled 2");
         }
         return node;
 
@@ -98,9 +104,9 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         Joueur joueurEnCours = node.getJoueur();
         Random coup = new Random();
         // a effacer limite
-        if (node.getCoup() != null) {
-            _plateau.joueCoup(node.getCoup());
-        }
+
+        _plateau.joueCoup(node.getCoup());
+
         // _plateau.joueCoup(node.getCoup());
         if (_plateau.vainqueur() == this.ennemi) {
             node.setMinimumValeur();
