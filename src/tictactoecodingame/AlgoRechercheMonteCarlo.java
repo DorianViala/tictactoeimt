@@ -79,15 +79,20 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
             }
             return _plateau.vainqueur();
         }
+        int nbCoup = 0;
         while (!_plateau.partieTerminee()) {
             // changer le jouer en cours
-            joueurEnCours = getJoueurEnnemi(joueurEnCours);
+            // System.out.println(nbCoup++);
             ArrayList<Coup> coupPossible = _plateau.getListeCoups(joueurEnCours);
             // joue un coup aléatoire
             Coup coupjoue = coupPossible.get(coup.nextInt(coupPossible.size()));
-            _plateau.getPiece(coupjoue).getJoueur();
-            _plateau.joueCoup();
+            // System.out.println(joueurEnCours);
+            // System.out.println(coup.nextInt(coupPossible.size()));
+            _plateau.joueCoup(coupjoue);
+            // System.out.println(_plateau);
+
         }
+        // System.out.println(_plateau.vainqueur());
         return _plateau.vainqueur();
     }
 
