@@ -43,7 +43,11 @@ public class Node implements Comparable<Node> {
     }
 
     public void incrementScore() {
-        this.scoreVictoire += 1;
+        this.scoreVictoire += 10;
+    }
+
+    public void decrementScore() {
+        this.scoreVictoire -= 10;
     }
 
     public int getScoreVictoire() {
