@@ -39,7 +39,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
             childArray = root.getChildArray();
             // update all uct scores
             childArray.forEach(node -> {
-                node.updateUctScore(2);
+                node.updateUctScore(Math.sqrt(2));
             });
             // get node with max uct score
             root = Collections.max(childArray);
@@ -58,10 +58,12 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
             for (int i = 0; i < listeCoups.size(); i++) {
                 Node tmpNode = new Node(listeCoups.get(i), node, joueurEnCours);
                 newArrayChild.add(tmpNode);
+
             }
             node.setChildArray(newArrayChild);
             return newArrayChild.get(0);
         }
+
         return node;
 
     }
@@ -72,7 +74,9 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         Random coup = new Random();
         _plateau.joueCoup(node.getCoup());
         if (_plateau.vainqueur() == this.ennemi) {
-            node.setMinimumValeur();
+            if (node.getParent() != null) {
+                node.getParent().setMinimumValeur();
+            }
             return _plateau.vainqueur();
         }
         while (!_plateau.partieTerminee()) {
@@ -80,7 +84,9 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
             joueurEnCours = getJoueurEnnemi(joueurEnCours);
             ArrayList<Coup> coupPossible = _plateau.getListeCoups(joueurEnCours);
             // joue un coup aléatoire
-            _plateau.joueCoup(coupPossible.get(coup.nextInt(coupPossible.size())));
+            Coup coupjoue = coupPossible.get(coup.nextInt(coupPossible.size()));
+            _plateau.getPiece(coupjoue).getJoueur();
+            _plateau.joueCoup();
         }
         return _plateau.vainqueur();
     }
@@ -89,19 +95,17 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         // permet de remonter tout l'arbre et d'y affecter
         // les scores correspondant a chaque node parcourut
         Node nodeAux = node;
-        if (_plateau.partieGagnee()) {
-            if (_plateau.vainqueur() == this.ennemi) {
-                nodeAux.setMinimumValeur();
-            }
-        }
         while (nodeAux != null) {
             nodeAux.incrementNbVisite();
             // si la node est l'opposant, on augmente son score
             // on vérifie que il n'y a pas eu égalité et si le joueur de node n'est pas le
             // meme que le joueur gagnant
-            if (nodeAux.getJoueur() == joueurGagnant && !_plateau.partieNulle()) {
-                nodeAux.incrementScore();
+            if (joueurGagnant == this.bot) {
+                if (nodeAux.getJoueur() == this.bot) {
+                    nodeAux.incrementScore();
+                }
             }
+
             nodeAux = nodeAux.getParent();
         }
     }
@@ -111,11 +115,16 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         int max = 0;
         Node bestNode = new Node();
         for (int i = 0; i < children.size(); i++) {
-            if (children.get(i).getNbVisite() > max) {
-                max = children.get(i).getNbVisite();
+            System.out.println("coup :" + children.get(i).getCoup() + " - nbdevisite :" + children.get(i).getNbVisite()
+                    + " - nb de victoire : " + children.get(i).getScoreVictoire() + " joueur : "
+                    + children.get(i).getJoueur());
+            if (children.get(i).getScoreVictoire() > max) {
+                max = children.get(i).getScoreVictoire();
                 bestNode = children.get(i);
             }
         }
+        System.out.println("\n---------------|\n");
+
         return bestNode;
     }
 
@@ -134,7 +143,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
             // phase 2 : expension
             newNode = this.expension(nodeSelectionne, _plateau, _joueur);
 
-            // phase 3 : simmulation
+            // phase 3 : simulation
             gagnant = this.simulation(newNode, _plateau);
 
             // phase 4 : backpropagation
