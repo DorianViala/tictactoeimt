@@ -43,11 +43,7 @@ public class Node implements Comparable<Node> {
     }
 
     public void incrementScore() {
-        this.scoreVictoire += 10;
-    }
-
-    public void decrementScore() {
-        this.scoreVictoire -= 10;
+        this.scoreVictoire += 1;
     }
 
     public int getScoreVictoire() {
@@ -90,8 +86,9 @@ public class Node implements Comparable<Node> {
         if (this.nbVisite == 0) {
             this.uctScore = Double.MAX_VALUE;
         } else {
-            double exploitation = this.scoreVictoire / this.nbVisite;
-            double exploration = C * Math.sqrt(Math.log(this.parent.getNbVisite()) / this.nbVisite);
+            double exploitation = this.scoreVictoire / (double) this.nbVisite;
+
+            double exploration = C * Math.sqrt(Math.log((double) this.parent.getNbVisite()) / (double) this.nbVisite);
             this.uctScore = exploitation + exploration;
         }
     }

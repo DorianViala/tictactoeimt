@@ -42,6 +42,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
             // update all uct scores
             childArray.forEach(node -> {
                 node.updateUctScore(2);
+
             });
             // get node with max uct score
             root = Collections.max(childArray);
@@ -75,10 +76,17 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
     }
 
     private Joueur simulation(Node node, Plateau _plateau) {
+        // System.out.println(_plateau);
+
         // permet de simuler une partie à partir de cette node
         Joueur joueurEnCours = node.getJoueur();
         _plateau.joueCoup(node.getCoup());
         // int nbCoup = 0;
+        if (_plateau.vainqueur() == this.ennemi) {
+            node.setMinimumValeur();
+            return _plateau.vainqueur();
+        }
+
         while (!_plateau.partieTerminee()) {
             // changer le jouer en cours
             // System.out.println(nbCoup++);
@@ -108,14 +116,6 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
             if (joueurGagnant == this.bot) {
                 if (nodeAux.getJoueur() == this.bot) {
                     nodeAux.incrementScore();
-                } else {
-                    nodeAux.decrementScore();
-                }
-            } else {
-                if (nodeAux.getJoueur() == this.bot) {
-                    nodeAux.decrementScore();
-                } else {
-                    nodeAux.incrementScore();
                 }
             }
 
@@ -136,7 +136,6 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
                 bestNode = children.get(i);
             }
         }
-        System.out.println("\n---------------|\n");
 
         return bestNode;
     }
@@ -150,6 +149,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         Joueur gagnant;
         _plateau.sauvegardePosition(0);
         for (int iter = 0; iter < this.max_iteration; iter++) {
+
             // phase 1 : selection
             Node nodeSelectionne = this.selection(root, _plateau);
 
