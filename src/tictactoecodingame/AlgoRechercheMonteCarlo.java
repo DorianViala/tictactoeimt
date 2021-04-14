@@ -36,7 +36,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
 
         // on selection a chaque étage de l'arbre
         // int nbCoup = 0;
-        while (!root.getChildArray().isEmpty()) {
+        while (!root.getChildArray().isEmpty() && _plateau.partieTerminee() == false) {
             // System.out.println(nbCoup++);
             childArray = root.getChildArray();
             // update all uct scores
@@ -44,12 +44,18 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
                 node.updateUctScore(2);
 
             });
+
             // get node with max uct score
             root = Collections.max(childArray);
             _plateau.joueCoup(root.getCoup());
+            System.out.println(_plateau);
+            System.out.println(_plateau.vainqueur());
+            System.out.println(_plateau.partieTerminee());
             // System.out.println(_plateau);
 
         }
+        System.out.println("\n-----\n");
+
         // System.out.println("\n----------------\n");
         return root;
     }
@@ -57,7 +63,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
     private Node expension(Node node, Plateau _plateau) {
         // on expend que si on a deja visite la node
         // sinon on rollout sur cette node
-        if (!_plateau.partieTerminee()) {
+        if (_plateau.partieTerminee() == false) {
             Joueur joueurEnCours = getJoueurEnnemi(node.getJoueur());
             ArrayList<Coup> listeCoups = _plateau.getListeCoups(joueurEnCours);
             ArrayList<Node> newArrayChild = new ArrayList<Node>();
@@ -82,8 +88,13 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         Joueur joueurEnCours = node.getJoueur();
         _plateau.joueCoup(node.getCoup());
         // int nbCoup = 0;
+        /*
+         * System.out.println(_plateau); System.out.println(_plateau.vainqueur());
+         * System.out.println("\n-----\n");
+         */
         if (_plateau.vainqueur() == this.ennemi) {
             node.setMinimumValeur();
+            System.out.println("set minimum score, vainqueur is : " + _plateau.vainqueur());
             return _plateau.vainqueur();
         }
 
