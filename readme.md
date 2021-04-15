@@ -207,4 +207,52 @@ et enfin joue ce coup sur le plateau.
 
 Lorsque la partie est terminée, cette fonction retourne le vainqueur.
 
-### Fontion de back
+### Fontion de backPropagation
+
+```java
+private void backPropagation(Node node, Joueur joueurGagnant, Plateau _plateau) {
+        // permet de remonter tout l'arbre et d'y affecter
+        // les scores correspondant a chaque node parcourut
+        Node nodeAux = node;
+        while (nodeAux != null) {
+            nodeAux.incrementNbVisite();
+            //si notre bot est le gagnant et si le joueur de cett
+            //node est notre bot, alors on incrémente son score de victoire
+            if (joueurGagnant == this.bot) {
+                if (nodeAux.getJoueur() == this.bot) {
+                    nodeAux.incrementScore();
+                }
+            }
+
+            nodeAux = nodeAux.getParent();
+        }
+    }
+
+```
+
+Cette fonction permet de **remonter les scores de visites et de victoire** sur toutes les nodes de la branche. Pour cela, on définit une node auxilaire qui est la node en cours et on lui incrémente son score de visite et son score de victoire si et seulement si le joueur contenu dans cette node est notre bot et que le joueur gagnant est notre bot.
+
+Ensuite, on définit la nodeAux comme étant le parent de la node en cours et on répète cette opération tant que la nodeAux éxiste ( diférente de null).
+
+### Fonction findBestChild
+
+```java
+public Node findBestChild(Node root) {
+        ArrayList<Node> children = root.getChildArray();
+        int max = 0;
+        Node bestNode = new Node();
+        for (int i = 0; i < children.size(); i++) {
+
+            if (children.get(i).getNbVisite() > max) {
+                max = children.get(i).getNbVisite();
+                bestNode = children.get(i);
+            }
+        }
+
+        return bestNode;
+    }
+```
+
+Cette fonction permet de trouver le meilleur coup à jouer lorsque l'algorithme a terminé de réaliser toutes les itérations pour générer l'arbre.
+
+Tout simplement, elle retourne la node enfant de la node root de l'arbre qui possède le plus de visite. C'est le coup contenu dans cette node qui est le meilleur à jouer.
