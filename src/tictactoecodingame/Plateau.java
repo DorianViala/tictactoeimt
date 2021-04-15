@@ -9,6 +9,9 @@ import java.util.ArrayList;
  *         puissance 4 , un échiquier , .. )
  */
 public abstract class Plateau {
+    abstract public Jeton[][] getGrille3x3();
+
+    abstract public Jeton[][] getGrille9x9();
 
     abstract public void init(); // Initialise le plateau pour le démarrage d'une nouvelle partie.
 

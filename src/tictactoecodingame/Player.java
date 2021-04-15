@@ -16,9 +16,9 @@ public class Player {
         JoueurOrdi joueurOrdi = new JoueurOrdi("monte");
 
         JoueurHumain moi = new JoueurHumain("Romain");
-        AlgoMinimax minmax = new AlgoMinimax(minimaxjoeur, joueurOrdi);
+        AlgoMiniMax9x9 minmax = new AlgoMiniMax9x9(minimaxjoeur, joueurOrdi);
 
-        GrilleTicTacToe3x3 grille = new GrilleTicTacToe3x3();
+        GrilleTicTacToe9x9 grille9 = new GrilleTicTacToe9x9();
 
         // Remplacer ici l'algorithme aléatoire par votre algorithme.
         // Créer une nouvelle classe qui hérite de la class AlgoRecherche
@@ -28,7 +28,7 @@ public class Player {
         minimaxjoeur.setAlgoRecherche(minmax);
         GrilleTicTacToe3x3 grille2 = new GrilleTicTacToe3x3();
 
-        Arbitre a = new Arbitre(grille2, joueurOrdi, minimaxjoeur);
+        Arbitre a = new Arbitre(grille9, joueurOrdi, minimaxjoeur);
 
         // a.startNewGame(true); // Demarre une partie en affichant la grille du jeu
 

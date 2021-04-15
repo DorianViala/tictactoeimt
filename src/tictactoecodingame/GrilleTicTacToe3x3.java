@@ -32,6 +32,17 @@ public class GrilleTicTacToe3x3 extends Plateau {
     }
 
     @Override
+    public Jeton[][] getGrille3x3() {
+        return this.grille;
+    }
+
+    @Override
+    public Jeton[][] getGrille9x9() {
+        Jeton[][] grille9x9 = new Jeton[1][1];
+        return grille9x9;
+    }
+
+    @Override
     public Piece getPiece(Case _case) {
         return grille[_case.getColonne()][_case.getLigne()];
     }
