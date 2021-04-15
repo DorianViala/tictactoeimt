@@ -5,8 +5,8 @@
 ## Sommaire
 
 - [Résultats MonteCarlo vs Minimax](#résultats-montecarlo-vs-minimax)
-    - [Plateau 9x9](#plateau-9x9:)
-    - [Plateau 3x3](#plateau-3x3:)
+    - [Plateau 9x9](#plateau-9x9)
+    - [Plateau 3x3](#plateau-3x3)
 - [Algorithme de MonteCarlo](#MonteCarlo)
   - [Fonction de sélection](#fonction-de-sélection)
   - [Fonction expansion](#fonction-expansion)
@@ -16,7 +16,7 @@
 
 ## Résultats MonteCarlo vs Minimax
 
-### Plateau 9x9: 
+### Plateau 9x9 
 
 <img src="https://user-images.githubusercontent.com/25727549/114910439-35938580-9e1e-11eb-8fda-efae1c605819.png" alt="tictactoe-score" width="300">
 
@@ -50,7 +50,7 @@
 
 ```
 
-### Plateau 3x3: 
+### Plateau 3x3
 
 <img src="https://user-images.githubusercontent.com/25727549/114910807-9e7afd80-9e1e-11eb-8b98-9a42fc7f3db1.png" alt="tictactoe-score" width="300">
 
