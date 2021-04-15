@@ -5,18 +5,21 @@
 ## Sommaire
 
 - [Résultats MonteCarlo vs Minimax](#résultats-montecarlo-vs-minimax)
-    - [Plateau 9x9](#plateau-9x9)
-    - [Plateau 3x3](#plateau-3x3)
+  - [Plateau 9x9](#plateau-9x9)
+  - [Plateau 3x3](#plateau-3x3)
 - [Algorithme de MonteCarlo](#MonteCarlo)
   - [Fonction de sélection](#fonction-de-sélection)
   - [Fonction expansion](#fonction-expansion)
   - [Fonction de simulation](#fonction-de-simulation)
   - [Fontion de backPropagation](#fonction-de-backPropagation)
-  - [Fonction findBestChild](#fonction-findBestChild) -[Nos sources](#nos-sources)
+  - [Fonction findBestChild](#fonction-findBestChild)
+- [Nos sources](#nos-sources)
+  - [Sites internet](#sites-internet)
+  - [Vidéos Youtube](#vidéos-Youtube)
 
 ## Résultats MonteCarlo vs Minimax
 
-### Plateau 9x9 
+### Plateau 9x9
 
 <img src="https://user-images.githubusercontent.com/25727549/114910439-35938580-9e1e-11eb-8fda-efae1c605819.png" alt="tictactoe-score" width="300">
 
@@ -83,9 +86,7 @@
     }
 ```
 
-
-
-## MonteCarlo 
+## MonteCarlo
 
 L'algorithme de MonteCarlo est un algorithme qui explore l'arbre des possibles. Il se déroule en 4 étapes principales qui sont répétées un grand nombre de fois. Ces 4 étapes sont les suivantes :
 
