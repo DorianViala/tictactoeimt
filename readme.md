@@ -1,8 +1,24 @@
 # TicTacToe
 
+<<<<<<< HEAD
+
 ## MonteCarlo
 
-L'algorithme de MonteCarlo est une algorithme qui explore l'arbre des possibles. Il se déroule en 4 étapes principales qui sont répétées un grand nombre de fois. Ces 4 étapes sont les suivantes :
+# L'algorithme de MonteCarlo est une algorithme qui explore l'arbre des possibles. Il se déroule en 4 étapes principales qui sont répétées un grand nombre de fois. Ces 4 étapes sont les suivantes :
+
+<img src="https://user-images.githubusercontent.com/25727549/114904864-991ab480-9e18-11eb-8f50-e112673487b0.gif" alt="tictactoe-gif" width="300">
+
+## Sommaire
+
+- [Algorithme de MonteCarlo](#MonteCarlo)
+  - [Fonction de sélection](#fonction-de-sélection)
+  - [Fonction expansion](#fonction-expansion)
+
+## MonteCarlo
+
+L'algorithme de MonteCarlo est un algorithme qui explore l'arbre des possibles. Il se déroule en 4 étapes principales qui sont répétées un grand nombre de fois. Ces 4 étapes sont les suivantes :
+
+> > > > > > > 42078fc0e65f0a7aeda1883d4dd99a331d2cd62e
 
 - la sélection
 - l'expansion
@@ -42,7 +58,12 @@ public Coup meilleurCoup(Plateau _plateau, Joueur _joueur, boolean _ponder) {
     }
 ```
 
+<<<<<<< HEAD
 Dans premier temps, nous initialisons notre `arbre` avec comme root un `node`.
+=======
+Dans un premier temps, nous initialisons notre `arbre` avec comme root un `node`.
+
+> > > > > > > 42078fc0e65f0a7aeda1883d4dd99a331d2cd62e
 
 La classe `Node.java` stocke les informations suivantes:
 
@@ -81,7 +102,7 @@ private Node selection(Node root, Plateau _plateau) {
     }
 ```
 
-Le but de la fonction sélection est de sélectionner succesivement les noeud de l'arbre jusqu'à arriver à une feuille. Pour sélectionner les nodes, on utilise le score UCT. Ce score permet de faire un compromis entre l'exploitation d'une node qui nous fait gagner souvent et l'exploration de node qui pourrait nous faire gagner.
+Le but de la fonction sélection est de sélectionner successivement les nœud de l'arbre jusqu'à arriver à une feuille. Pour sélectionner les nodes, on utilise le score UCT. Ce score permet de faire un compromis entre l'exploitation d'une node qui nous fait gagner souvent et l'exploration de node qui pourrait nous faire gagner.
 
 Pour sélectionner le score UCT maximum, nous avons étendu la classe `Node` en `Comparable`. Cela nous permet de définir la fonction `CompareTo` dans notre Node qui va comparer le score UCT maximum.
 
@@ -108,6 +129,43 @@ Ensuite, dans notre fonction sélection, il nous reste plus qu'à mettre à jour
 
 ```java
 root = Collections.max(childArray);
+```
+
+### Fonction expansion
+
+```java
+private Node expension(Node node, Plateau _plateau) {
+        // on expend que si on a deja visite la node
+        // sinon on rollout sur cette node
+        if (_plateau.partieTerminee() == false) {
+            Joueur joueurEnCours = getJoueurEnnemi(node.getJoueur());
+            ArrayList<Coup> listeCoups = _plateau.getListeCoups(joueurEnCours);
+            ArrayList<Node> newArrayChild = new ArrayList<Node>();
+
+            for (int i = 0; i < listeCoups.size(); i++) {
+                Node tmpNode = new Node(listeCoups.get(i), node, joueurEnCours);
+                newArrayChild.add(tmpNode);
+
+            }
+            node.setChildArray(newArrayChild);
+            return newArrayChild.get(0);
+        }
+
+        return node;
+
+    }
+```
+
+La fonction expansion ajoute tous les coups possibles à partir de la position actuelle au node enfant que l'on a sélectionné précédemment. Pour ce faire, nous récupérons la liste des coups possible avec
+
+```java
+ArrayList<Coup> listeCoups = _plateau.getListeCoups(joueurEnCours);
+```
+
+A partir de ça, il nous suffit d'itérer à travers cette liste de coups et de créer les nodes enfants auxquels on associe le coup, le joueur qui joue ce coup et la node parent. Une fois que c'est fait, on associe la `ArrayList`, dans laquelle on stocke les nodes enfants, au node parent.
+
+```java
+node.setChildArray(newArrayChild);
 ```
 
 ### Fonction de simulation
