@@ -78,10 +78,6 @@ public class Node implements Comparable<Node> {
         return this.joueur;
     }
 
-    public void setMinimumValeur() {
-        this.scoreVictoire = Integer.MIN_VALUE;
-    }
-
     public void updateUctScore(double C) {
         if (this.nbVisite == 0) {
             this.uctScore = Double.MAX_VALUE;
