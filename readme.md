@@ -10,7 +10,7 @@
 
 ## MonteCarlo 
 
-L'algorithme de MonteCarlo est une algorithme qui explore l'arbre des possibles. Il se déroule en 4 étapes principales qui sont répétées un grand nombre de fois. Ces 4 étapes sont les suivantes :  
+L'algorithme de MonteCarlo est un algorithme qui explore l'arbre des possibles. Il se déroule en 4 étapes principales qui sont répétées un grand nombre de fois. Ces 4 étapes sont les suivantes :  
 
 - la sélection
 - l'expansion
@@ -50,7 +50,7 @@ public Coup meilleurCoup(Plateau _plateau, Joueur _joueur, boolean _ponder) {
     }
 ```
 
-Dans premier temps, nous initialisons notre `arbre` avec comme root un `node`. 
+Dans un premier temps, nous initialisons notre `arbre` avec comme root un `node`. 
 
 La classe `Node.java` stocke les informations suivantes: 
 
@@ -88,7 +88,7 @@ private Node selection(Node root, Plateau _plateau) {
         return root;
     }
 ```
-Le but de la fonction sélection est de sélectionner succesivement les noeud de l'arbre jusqu'à arriver à une feuille. Pour sélectionner les nodes, on utilise le score UCT. Ce score permet de faire un compromis entre l'exploitation d'une node qui nous fait gagner souvent et l'exploration de node qui pourrait nous faire gagner.
+Le but de la fonction sélection est de sélectionner successivement les nœud de l'arbre jusqu'à arriver à une feuille. Pour sélectionner les nodes, on utilise le score UCT. Ce score permet de faire un compromis entre l'exploitation d'une node qui nous fait gagner souvent et l'exploration de node qui pourrait nous faire gagner.
 
 Pour sélectionner le score UCT maximum, nous avons étendu la classe `Node` en `Comparable`. Cela nous permet de définir la fonction `CompareTo` dans notre Node qui va comparer le score UCT maximum.
 
@@ -136,13 +136,13 @@ private Node expension(Node node, Plateau _plateau) {
     }    
 ```
 
-La fonction expansion ajoute tous les coups possible à partir de la position actuelle au node enfant que l'on a sélectionné précédemment. Pour ce faire, nous récupérons la liste des coups possible avec 
+La fonction expansion ajoute tous les coups possibles à partir de la position actuelle au node enfant que l'on a sélectionné précédemment. Pour ce faire, nous récupérons la liste des coups possible avec 
 
 ```java 
 ArrayList<Coup> listeCoups = _plateau.getListeCoups(joueurEnCours);
 ```
 
-A partir de ça, il nous suffit d'itérer à travers cette liste de coups et de créer les nodes enfants auquels on associe le coups, le joueur qui joue ce coup et la node parent. Une fois que c'est fait, on associe la `ArrayList`, dans laquelle on stocke les nodes enfants, au node parent.
+A partir de ça, il nous suffit d'itérer à travers cette liste de coups et de créer les nodes enfants auxquels on associe le coup, le joueur qui joue ce coup et la node parent. Une fois que c'est fait, on associe la `ArrayList`, dans laquelle on stocke les nodes enfants, au node parent.
 
 ```java 
 node.setChildArray(newArrayChild);
