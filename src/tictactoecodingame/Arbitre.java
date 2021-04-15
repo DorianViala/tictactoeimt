@@ -65,7 +65,6 @@ public class Arbitre {
             System.out.println(vainqueur + " gagne la partie ");
         else
             System.out.println("Partie nulle ");
-        System.out.println(plateau);
         return vainqueur;
 
     }
