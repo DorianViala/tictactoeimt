@@ -1,5 +1,9 @@
 package tictactoecodingame;
 
+import java.util.*;
+import java.io.*;
+import java.math.*;
+
 /**
  *
  * @author franck
@@ -11,28 +15,45 @@ package tictactoecodingame;
 public class Player {
 
     public static void main(String args[]) {
-
-        JoueurOrdi minimaxJoueur = new JoueurOrdi("Minimax");
+        JoueurHumain humain = new JoueurHumain("codinggame");
         JoueurOrdi monteCarloJoueur = new JoueurOrdi("MonteCarlo");
 
-        AlgoMinimax minmax = new AlgoMinimax(minimaxJoueur, monteCarloJoueur);
-        AlgoRechercheMonteCarlo monte = new AlgoRechercheMonteCarlo(minimaxJoueur, monteCarloJoueur);
-
+        AlgoRechercheMonteCarlo monte = new AlgoRechercheMonteCarlo(humain, monteCarloJoueur);
+        Jeton jetonMonte = new Jeton(monteCarloJoueur);
+        Jeton jetonHumain = new Jeton(humain);
         GrilleTicTacToe3x3 grille3 = new GrilleTicTacToe3x3();
 
         // Remplacer ici l'algorithme aléatoire par votre algorithme.
         // Créer une nouvelle classe qui hérite de la class AlgoRecherche
 
         monteCarloJoueur.setAlgoRecherche(monte);
-        minimaxJoueur.setAlgoRecherche(minmax);
 
-        Arbitre a = new Arbitre(grille3, monteCarloJoueur, minimaxJoueur);
+        Arbitre a = new Arbitre(grille3, monteCarloJoueur, humain);
 
-        // a.startNewGame(true); // Demarre une partie en affichant la grille du jeu
+        a.startNewGame(false); // Demarre une partie en affichant la grille du jeu
 
         // Pour lancer un tournooi de 100 parties en affichant la grille du jeu
         //
-        a.startTournament(200, false);
+        Scanner in = new Scanner(System.in);
+
+        // game loop
+        while (true) {
+            int opponentRow = in.nextInt();
+            int opponentCol = in.nextInt();
+            grille3.joueCoup(new CoupTicTacToe(opponentCol, opponentRow, jetonHumain));
+            System.err.println(opponentCol + " " + opponentRow);
+            int validActionCount = in.nextInt();
+            for (int i = 0; i < validActionCount; i++) {
+                int row = in.nextInt();
+                int col = in.nextInt();
+            }
+            Coup coupMonteCarlo = monte.meilleurCoup(grille3, monteCarloJoueur, true);
+            grille3.joueCoup(coupMonteCarlo);
+            // Write an action using System.out.println()
+            // To debug: System.err.println("Debug messages...");
+
+            System.out.println(coupMonteCarlo);
+        }
 
     }
 }
