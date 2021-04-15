@@ -103,4 +103,39 @@ Ensuite, dans notre fonction sélection, il nous reste plus qu'à mettre à jour
 root = Collections.max(childArray);
 ```
 
+### Fonction expansion
 
+```java
+private Node expension(Node node, Plateau _plateau) {
+        // on expend que si on a deja visite la node
+        // sinon on rollout sur cette node
+        if (_plateau.partieTerminee() == false) {
+            Joueur joueurEnCours = getJoueurEnnemi(node.getJoueur());
+            ArrayList<Coup> listeCoups = _plateau.getListeCoups(joueurEnCours);
+            ArrayList<Node> newArrayChild = new ArrayList<Node>();
+
+            for (int i = 0; i < listeCoups.size(); i++) {
+                Node tmpNode = new Node(listeCoups.get(i), node, joueurEnCours);
+                newArrayChild.add(tmpNode);
+
+            }
+            node.setChildArray(newArrayChild);
+            return newArrayChild.get(0);
+        }
+
+        return node;
+
+    }    
+```
+
+La fonction expansion ajoute tous les coups possible à partir de la position actuelle au node enfant que l'on a sélectionné précédemment. Pour ce faire, nous récupérons la liste des coups possible avec 
+
+```java 
+ArrayList<Coup> listeCoups = _plateau.getListeCoups(joueurEnCours);
+```
+
+A partir de ça, il nous suffit d'itérer à travers cette liste de coups et de créer les nodes enfants auquels on associe le coups, le joueur qui joue ce coup et la node parent. Une fois que c'est fait, on associe la `ArrayList`, dans laquelle on stocke les nodes enfants, au node parent.
+
+```java 
+node.setChildArray(newArrayChild);
+```
