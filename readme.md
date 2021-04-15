@@ -145,6 +145,8 @@ public static void main(String args[]) {
 
 ```
 
+Pour faire fonctionner notre algorithme de monte carlo sur CodeInGame, nous avons du modifier les coordonnées des pionts car celles sur les site et celle de la classe plateau ne sont pas les même. De plus, nous avons de modifier la méthode `toString()` d'un coup pour retourner les bonnes valeurs dans le bonne ordre et sans parenthèse et virgule.
+
 ## MonteCarlo
 
 L'algorithme de MonteCarlo est un algorithme qui explore l'arbre des possibles. Il se déroule en 4 étapes principales qui sont répétées un grand nombre de fois. Ces 4 étapes sont les suivantes :
