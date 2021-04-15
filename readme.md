@@ -19,7 +19,7 @@
 
   - [Fonctionnement de l'algorithme](#fonctionnement-minmax)
   - [Pruning](#pruning)
-  - [Implémentation](#implementation)
+  - [Implémentation](#implémentation)
   - [Résulat contre Bot Aléatoire](#Résulat-contre-Aléatoire)
 
 - [Nos sources](#nos-sources)
