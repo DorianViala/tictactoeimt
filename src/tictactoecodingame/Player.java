@@ -23,7 +23,7 @@ public class Player {
         // Remplacer ici l'algorithme aléatoire par votre algorithme.
         // Créer une nouvelle classe qui hérite de la class AlgoRecherche
         AlgoRechercheMonteCarlo monte = new AlgoRechercheMonteCarlo(minimaxjoeur, joueurOrdi); // L'ordinateur joue au
-                                                                                               // hasard
+        // hasard
         joueurOrdi.setAlgoRecherche(monte);
         minimaxjoeur.setAlgoRecherche(minmax);
         GrilleTicTacToe3x3 grille2 = new GrilleTicTacToe3x3();

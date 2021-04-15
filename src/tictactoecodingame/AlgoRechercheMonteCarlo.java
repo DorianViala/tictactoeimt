@@ -39,7 +39,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
             childArray = root.getChildArray();
             // update all uct scores
             childArray.forEach(node -> {
-                node.updateUctScore(Math.sqrt(2));
+                node.updateUctScore(2);
 
             });
 
@@ -77,7 +77,10 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         // permet de simuler une partie à partir de cette node
         Joueur joueurEnCours = node.getJoueur();
         _plateau.joueCoup(node.getCoup());
-
+        if (_plateau.vainqueur() == this.ennemi) {
+            node.setScoreVictoire(Integer.MAX_VALUE);
+            return _plateau.vainqueur();
+        }
         while (!_plateau.partieTerminee()) {
             // changer le jouer en cours
             // System.out.println(nbCoup++);
@@ -119,7 +122,9 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         int max = 0;
         Node bestNode = new Node();
         for (int i = 0; i < children.size(); i++) {
-
+            System.out.println("coup :" + children.get(i).getCoup() + " - nbdevisite :" + children.get(i).getNbVisite()
+                    + " - nb de victoire : " + children.get(i).getNbVisite() + " joueur : "
+                    + children.get(i).getJoueur());
             if (children.get(i).getNbVisite() > max) {
                 max = children.get(i).getNbVisite();
                 bestNode = children.get(i);

@@ -66,6 +66,10 @@ public class Node implements Comparable<Node> {
         this.coup = coup;
     }
 
+    public void setScoreVictoire(int score) {
+        this.scoreVictoire = score;
+    }
+
     public void setChildArray(ArrayList<Node> childArray) {
         this.childArray = childArray;
     }
