@@ -8,8 +8,8 @@
   - [Fonction de sélection](#fonction-de-sélection)
   - [Fonction expansion](#fonction-expansion)
   - [Fonction de simulation](#fonction-de-simulation)
-  - [Fontion de backPropagation](#fonction-de-backpropagation)
-  - [Fonction findBestChild](#fonction-findBestChild)
+  - [Fontion de backPropagation](#fonction-de-backPropagation)
+  - [Fonction findBestChild](#fonction-findBestChild) -[Nos sources](#nos-sources)
 
 ## MonteCarlo
 
@@ -259,3 +259,20 @@ public Node findBestChild(Node root) {
 Cette fonction permet de trouver le meilleur coup à jouer lorsque l'algorithme a terminé de réaliser toutes les itérations pour générer l'arbre.
 
 Tout simplement, elle retourne la node enfant de la node root de l'arbre qui possède le plus de visite. C'est le coup contenu dans cette node qui est le meilleur à jouer.
+
+## Nos sources
+
+Vous trouverez ci-dessous une liste de nos principales sources pour réaliser ce projet :
+
+### Sites internet
+
+- [Wikipédia ](https://en.wikipedia.org/wiki/Monte_Carlo_tree_search#Pure_Monte_Carlo_game_search)
+- [SANDIPANWEB](https://sandipanweb.wordpress.com/2017/03/26/using-monte-carlo-simulation-to-play-tictactoe-in-computer/)
+- [Deakos Data Science](http://matthewdeakos.me/2018/03/10/monte-carlo-tree-search/)
+- [Baeldung](https://www.baeldung.com/java-monte-carlo-tree-search)
+
+### Vidéos Youtube
+
+- [SANDIPANWEB](https://sandipanweb.wordpress.com/2017/03/26/using-monte-carlo-simulation-to-play-tictactoe-in-computer/)
+- [Monte Carlo Tree Search](https://www.youtube.com/watch?v=UXW2yZndl7U&ab_channel=JohnLevine)
+- [Algorithms Explained – minimax and alpha-beta pruning ](https://www.youtube.com/watch?v=l-hh51ncgDI&ab_channel=SebastianLague)
