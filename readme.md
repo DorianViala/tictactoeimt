@@ -4,9 +4,83 @@
 
 ## Sommaire
 
+- [Résultats MonteCarlo vs Minimax](#résultats-montecarlo-vs-minimax)
+    - [Plateau 9x9](#plateau-9x9:)
+    - [Plateau 3x3](#plateau-3x3:)
 - [Algorithme de MonteCarlo](#MonteCarlo)
   - [Fonction de sélection](#fonction-de-sélection)
   - [Fonction expansion](#fonction-expansion)
+
+## Résultats MonteCarlo vs Minimax
+
+### Plateau 9x9: 
+
+<img src="https://user-images.githubusercontent.com/25727549/114910439-35938580-9e1e-11eb-8fda-efae1c605819.png" alt="tictactoe-score" width="300">
+
+```java
+   public static void main(String args[]) {
+
+        JoueurOrdi minimaxJoueur = new JoueurOrdi("Minimax");
+        JoueurOrdi monteCarloJoueur = new JoueurOrdi("MonteCarlo");
+
+        AlgoMiniMax9x9 minmax = new AlgoMiniMax9x9(minimaxJoueur, monteCarloJoueur);
+        AlgoRechercheMonteCarlo monte = new AlgoRechercheMonteCarlo(minimaxJoueur, monteCarloJoueur);
+
+        GrilleTicTacToe9x9 grille9 = new GrilleTicTacToe9x9();
+
+        // Remplacer ici l'algorithme aléatoire par votre algorithme.
+        // Créer une nouvelle classe qui hérite de la class AlgoRecherche
+
+        monteCarloJoueur.setAlgoRecherche(monte);
+        minimaxJoueur.setAlgoRecherche(minmax);
+
+        Arbitre a = new Arbitre(grille9, monteCarloJoueur, minimaxJoueur);
+
+        // a.startNewGame(true); // Demarre une partie en affichant la grille du jeu
+
+        // Pour lancer un tournoi de 100 parties en affichant la grille du jeu
+        //
+        a.startTournament(20, false);
+
+    }
+}
+
+```
+
+### Plateau 3x3: 
+
+<img src="https://user-images.githubusercontent.com/25727549/114910807-9e7afd80-9e1e-11eb-8b98-9a42fc7f3db1.png" alt="tictactoe-score" width="300">
+
+```java
+
+    public static void main(String args[]) {
+
+        JoueurOrdi minimaxJoueur = new JoueurOrdi("Minimax");
+        JoueurOrdi monteCarloJoueur = new JoueurOrdi("MonteCarlo");
+
+        AlgoMinimax minmax = new AlgoMinimax(minimaxJoueur, monteCarloJoueur);
+        AlgoRechercheMonteCarlo monte = new AlgoRechercheMonteCarlo(minimaxJoueur, monteCarloJoueur);
+
+        GrilleTicTacToe3x3 grille3 = new GrilleTicTacToe3x3();
+
+        // Remplacer ici l'algorithme aléatoire par votre algorithme.
+        // Créer une nouvelle classe qui hérite de la class AlgoRecherche
+
+        monteCarloJoueur.setAlgoRecherche(monte);
+        minimaxJoueur.setAlgoRecherche(minmax);
+
+        Arbitre a = new Arbitre(grille3, monteCarloJoueur, minimaxJoueur);
+
+        // a.startNewGame(true); // Demarre une partie en affichant la grille du jeu
+
+        // Pour lancer un tournoi de 100 parties en affichant la grille du jeu
+        //
+        a.startTournament(200, false);
+
+    }
+```
+
+
 
 ## MonteCarlo 
 
