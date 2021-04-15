@@ -1367,7 +1367,7 @@ class Player {
 		}
 
 		public String toString() {
-			return colonne + " " + ligne;
+			return (2 - ligne) + " " + colonne;
 		}
 
 		@Override
@@ -1396,13 +1396,11 @@ class Player {
 		monteCarloJoueur.setAlgoRecherche(monte);
 		Arbitre a = new Arbitre(grille3, monteCarloJoueur, humain);
 		Scanner in = new Scanner(System.in);
-		boolean firstTour = true;
 		while (true) {
 			int opponentRow = in.nextInt();
 			int opponentCol = in.nextInt();
-			if (!firstTour) {
+			if (opponentCol != -1) {
 				CoupTicTacToe coupEnnemi = new CoupTicTacToe(opponentCol, opponentRow, jetonHumain);
-				System.err.println("mon coup " + opponentCol);
 				grille3.joueCoup(coupEnnemi);
 				System.err.println(grille3);
 			}
@@ -1412,12 +1410,11 @@ class Player {
 				int row = in.nextInt();
 				int col = in.nextInt();
 			}
-			System.err.println("mon cotezs");
 
 			Coup coupMonteCarlo = monte.meilleurCoup(grille3, monteCarloJoueur, false);
-			System.err.println(coupMonteCarlo);
-			System.out.println("0 0");
-
+			grille3.joueCoup(coupMonteCarlo);
+			System.err.println(grille3);
+			System.out.println(coupMonteCarlo);
 		}
 	}
 }
