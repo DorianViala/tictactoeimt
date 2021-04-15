@@ -7,6 +7,9 @@
 - [Algorithme de MonteCarlo](#MonteCarlo)
   - [Fonction de sélection](#fonction-de-sélection)
   - [Fonction expansion](#fonction-expansion)
+  - [Fonction de simulation](#fonction-de-simulation)
+  - [Fontion de backPropagation](#fonction-de-backpropagation)
+  - [Fonction findBestChild](#fonction-findBestChild)
 
 ## MonteCarlo
 
