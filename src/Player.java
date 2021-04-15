@@ -1400,7 +1400,7 @@ class Player {
 			int opponentRow = in.nextInt();
 			int opponentCol = in.nextInt();
 			if (opponentCol != -1) {
-				CoupTicTacToe coupEnnemi = new CoupTicTacToe(opponentCol, opponentRow, jetonHumain);
+				CoupTicTacToe coupEnnemi = new CoupTicTacToe(2 - opponentCol, opponentRow, jetonHumain);
 				grille3.joueCoup(coupEnnemi);
 				System.err.println(grille3);
 			}
