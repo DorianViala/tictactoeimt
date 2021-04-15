@@ -269,9 +269,9 @@ node.setChildArray(newArrayChild);
 ```
 
 Le but de cette fonction est de faire jouer les deux joueurs de manière aléatoire à partir d'une node particulière.
-Tout d'abord, on récupère la node passée en paramètre (celle retourné par la pahse d'expension) et on **joue le coup** contenu dans cette node afin de **mettre le plateau à jour**.
+Tout d'abord, on récupère la node passée en paramètre (celle retourné par la phase d'expension) et on **joue le coup** contenu dans cette node afin de **mettre le plateau à jour**.
 
-Ensuite, on vérifie si, après ce coup, **la partie est terminée et si le vainqueur et notre ennemi** (ici `this.ennemi`). Si c'est le cas, on va attribuer comme score de victoire à cette node la valeur maximale `Integer.MAX_VALUE`. Cette action favorise l'algorithme à choisir cette node lorsque l'on se retrouvera dans une phase de séléction sur la node parent lors d'une autre itération, et donc de **toujours incrémenter le score de visite mais pas celui de victoire** sur toutes les nodes de cette branche lors de la phase de Backpropagation, ce qui entrainera l'algorithme à **choisir un autre coup que celui-la** lors de la phase de séléction au niveau de la root de l'arbre.
+Ensuite, on vérifie si, après ce coup, **la partie est terminée et si le vainqueur est notre ennemi** (ici `this.ennemi`). Si c'est le cas, on va attribuer comme score de victoire à cette node la valeur maximale `Integer.MAX_VALUE`. Cette action favorise l'algorithme à choisir cette node lorsque l'on se retrouvera dans une phase de séléction sur la node parent lors d'une autre itération, et donc de **toujours incrémenter le score de visite mais pas celui de victoire** sur toutes les nodes de cette branche lors de la phase de Backpropagation. Ce principe entrainera l'algorithme par la suite à **choisir un autre coup que celui-la** lors de la phase de séléction au niveau de la root de l'arbre.
 
 Sinon, tant que la partie terminée, la fonction change le joueur en cours avec `getJoueurEnnemi` :
 
@@ -284,7 +284,7 @@ Sinon, tant que la partie terminée, la fonction change le joueur en cours avec 
     }
 ```
 
-,lui attribue ensuite un coup choisi aléatoirement dans sa liste de coups disponible :
+lui attribue ensuite un coup choisi aléatoirement dans sa liste de coups disponible :
 
 ```java
 Coup coupjoue = coupPossible.get(rnd.nextInt(coupPossible.size()));
