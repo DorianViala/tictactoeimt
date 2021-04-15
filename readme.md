@@ -356,7 +356,7 @@ Pour affecter à un coup un score, l'algorithme va alterner entre chaque joueur 
 
 On a l'habitude de représenter l'ensembe des disposition de plateau par un graphe, et à chaque noeud correspond un état de plateau.
 
-![Arbre des possibles](./assets/arbre.png)
+![arbre](https://user-images.githubusercontent.com/81106609/114912076-df274680-9e1f-11eb-8472-8630151d8906.PNG)
 
 On observe sur ce graphe que plus il est profond, plus il y a d'état de plateau, et donc qu'on a joué de coup, et donc qu'on a calculé de coups. Ce nombre de coup croit de façon exponentielle, il arrivera donc des cas de figure où la charge de travail sera trop importante. C'est pourquoi on introduit la notion de profondeur limite dans l'algorithme MinMax. On introduit un cas d'arrêt : l'ordinateur calcule des états de plateau, jusqu'a une certaine profondeur.
 
@@ -430,7 +430,7 @@ Le joueur qui appelle la méthode MinMax, donc le joueur Max est en premier.
 ```
 
 La classe Player cherche en instanciant les joueur Ordi à faire appel à la fonction meilleurCoup qui retournera un type Coup déterminé par l'algorithme MinMax.
-L'algorithme prend en paramètre le plateau actuel, que c'est au joueur Min de jouer, une profondeur de 5, une valeur d'alpha et beta respectivement -20 et 20.
+L'algorithme prend en paramètre le plateau actuel, que c'est au joueur Min de jouer, une **_profondeur de 5_**, une valeur d'alpha et beta respectivement -20 et 20.
 Je ne présente ici que le strict nécessaire, veuillez vous réferer au code source, qui est proprement commenté pour le détail des méthodes.
 
 ```java
