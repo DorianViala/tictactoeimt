@@ -7,6 +7,8 @@
 - [Résultats MonteCarlo vs Minimax](#résultats-montecarlo-vs-minimax)
   - [Plateau 9x9](#plateau-9x9)
   - [Plateau 3x3](#plateau-3x3)
+- [Résultats CodeInGame](#résultats-codeInGame)
+  - [PLateau 3x3](#pLateau-3x3-codeInGame)
 - [Algorithme de MonteCarlo](#MonteCarlo)
 
   - [Fonction de sélection](#fonction-de-sélection)
@@ -93,6 +95,54 @@
         a.startTournament(200, false);
 
     }
+```
+
+## Résultats CodeInGame
+
+### PLateau 3x3 codeInGame
+
+Ci dessous le leaderBoard de l'arène codeInGame 3x3 (nous sommes RomainBat, en top1)
+
+![](https://user-images.githubusercontent.com/72984755/114941714-ca5caa00-9e43-11eb-8827-11bbb7c4e7d0.png)
+
+Ci dessous le code d'une game :
+
+```java
+public static void main(String args[]) {
+        Joueur ennemi = new JoueurOrdi("enemi");
+        JoueurOrdi joueurOrdi = new JoueurOrdi("monte");
+        GrilleTicTacToe9x9 grille9 = new GrilleTicTacToe9x9();
+        AlgoRechercheMonteCarlo monte = new AlgoRechercheMonteCarlo(ennemi, joueurOrdi); // L'ordinateur joue au
+        joueurOrdi.setAlgoRecherche(monte);
+        GrilleTicTacToe3x3 grille2 = new GrilleTicTacToe3x3();
+        Jeton jetonEnnmi = new Jeton(ennemi);
+        //initier le tableau
+        grille2.init();
+
+        Scanner in = new Scanner(System.in);
+        while(true){
+            int opponentRow = in.nextInt();
+            int opponentCol = in.nextInt();
+            System.err.println(" Coup ennemi  : "+opponentRow + " "+opponentCol);
+            int validActionCount = in.nextInt();
+            //c'est useless
+            for (int i = 0; i < validActionCount; i++) {
+                int row = in.nextInt();
+                int col = in.nextInt();
+            }
+            if(opponentRow!=-1){
+                opponentRow=2-opponentRow;
+                Coup coupEnnemi = new CoupTicTacToe(opponentCol, opponentRow,jetonEnnmi);
+                grille2.joueCoup(coupEnnemi);
+            }
+
+            Coup coueBot = monte.meilleurCoup(grille2, joueurOrdi, false);
+            grille2.joueCoup(coueBot);
+            System.out.println(coueBot.toString());
+        }
+    }
+}
+
 ```
 
 ## MonteCarlo
