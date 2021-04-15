@@ -1,5 +1,13 @@
 # TicTacToe
 
+<img src="https://user-images.githubusercontent.com/25727549/114904864-991ab480-9e18-11eb-8f50-e112673487b0.gif" alt="tictactoe-gif" width="300">
+
+## Sommaire
+
+- [Algorithme de MonteCarlo](#MonteCarlo)
+  - [Fonction de sélection](#fonction-de-sélection)
+  - [Fonction expansion](#fonction-expansion)
+
 ## MonteCarlo 
 
 L'algorithme de MonteCarlo est une algorithme qui explore l'arbre des possibles. Il se déroule en 4 étapes principales qui sont répétées un grand nombre de fois. Ces 4 étapes sont les suivantes :  
