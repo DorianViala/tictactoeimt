@@ -4,10 +4,89 @@
 
 ## Sommaire
 
+- [Résultats MonteCarlo vs Minimax](#résultats-montecarlo-vs-minimax)
+  - [Plateau 9x9](#plateau-9x9)
+  - [Plateau 3x3](#plateau-3x3)
 - [Algorithme de MonteCarlo](#MonteCarlo)
 
   - [Fonction de sélection](#fonction-de-sélection)
   - [Fonction expansion](#fonction-expansion)
+  - [Fonction de simulation](#fonction-de-simulation)
+  - [Fontion de backPropagation](#fonction-de-backPropagation)
+  - [Fonction findBestChild](#fonction-findBestChild)
+
+- [Nos sources](#nos-sources)
+  - [Sites internet](#sites-internet)
+  - [Vidéos Youtube](#vidéos-Youtube)
+
+## Résultats MonteCarlo vs Minimax
+
+### Plateau 9x9
+
+<img src="https://user-images.githubusercontent.com/25727549/114910439-35938580-9e1e-11eb-8fda-efae1c605819.png" alt="tictactoe-score" width="300">
+
+```java
+   public static void main(String args[]) {
+
+        JoueurOrdi minimaxJoueur = new JoueurOrdi("Minimax");
+        JoueurOrdi monteCarloJoueur = new JoueurOrdi("MonteCarlo");
+
+        AlgoMiniMax9x9 minmax = new AlgoMiniMax9x9(minimaxJoueur, monteCarloJoueur);
+        AlgoRechercheMonteCarlo monte = new AlgoRechercheMonteCarlo(minimaxJoueur, monteCarloJoueur);
+
+        GrilleTicTacToe9x9 grille9 = new GrilleTicTacToe9x9();
+
+        // Remplacer ici l'algorithme aléatoire par votre algorithme.
+        // Créer une nouvelle classe qui hérite de la class AlgoRecherche
+
+        monteCarloJoueur.setAlgoRecherche(monte);
+        minimaxJoueur.setAlgoRecherche(minmax);
+
+        Arbitre a = new Arbitre(grille9, monteCarloJoueur, minimaxJoueur);
+
+        // a.startNewGame(true); // Demarre une partie en affichant la grille du jeu
+
+        // Pour lancer un tournoi de 100 parties en affichant la grille du jeu
+        //
+        a.startTournament(20, false);
+
+    }
+}
+
+```
+
+### Plateau 3x3
+
+<img src="https://user-images.githubusercontent.com/25727549/114910807-9e7afd80-9e1e-11eb-8b98-9a42fc7f3db1.png" alt="tictactoe-score" width="300">
+
+```java
+
+    public static void main(String args[]) {
+
+        JoueurOrdi minimaxJoueur = new JoueurOrdi("Minimax");
+        JoueurOrdi monteCarloJoueur = new JoueurOrdi("MonteCarlo");
+
+        AlgoMinimax minmax = new AlgoMinimax(minimaxJoueur, monteCarloJoueur);
+        AlgoRechercheMonteCarlo monte = new AlgoRechercheMonteCarlo(minimaxJoueur, monteCarloJoueur);
+
+        GrilleTicTacToe3x3 grille3 = new GrilleTicTacToe3x3();
+
+        // Remplacer ici l'algorithme aléatoire par votre algorithme.
+        // Créer une nouvelle classe qui hérite de la class AlgoRecherche
+
+        monteCarloJoueur.setAlgoRecherche(monte);
+        minimaxJoueur.setAlgoRecherche(minmax);
+
+        Arbitre a = new Arbitre(grille3, monteCarloJoueur, minimaxJoueur);
+
+        // a.startNewGame(true); // Demarre une partie en affichant la grille du jeu
+
+        // Pour lancer un tournoi de 100 parties en affichant la grille du jeu
+        //
+        a.startTournament(200, false);
+
+    }
+```
 
 - [Algorithme MinMax](#MinMax)
 
@@ -217,15 +296,69 @@ et enfin joue ce coup sur le plateau.
 
 Lorsque la partie est terminée, cette fonction retourne le vainqueur.
 
-### Fontion de back
+### Fontion de backPropagation
 
-## MinMax
+```java
+private void backPropagation(Node node, Joueur joueurGagnant, Plateau _plateau) {
+        // permet de remonter tout l'arbre et d'y affecter
+        // les scores correspondant a chaque node parcourut
+        Node nodeAux = node;
+        while (nodeAux != null) {
+            nodeAux.incrementNbVisite();
+            //si notre bot est le gagnant et si le joueur de cett
+            //node est notre bot, alors on incrémente son score de victoire
+            if (joueurGagnant == this.bot) {
+                if (nodeAux.getJoueur() == this.bot) {
+                    nodeAux.incrementScore();
+                }
+            }
 
-L'algorithme MinMax est un algorithme qui s'applique pour les jeux à 2 joueurs et à information complète.
+            nodeAux = nodeAux.getParent();
+        }
+    }
 
-Il amène l'ordinateur à tester tous les coups dont il dispose et à leur attribuer un score. L'ordinateur sélectionne donc le coup avec le meilleur score.
-Pour affecter à un coup un score, l'algorithme va alterner entre chaque joueur un certain nombre de fois. Ce nombre de fois est déterminer par le seul et unique paramètre de l'algorithme MinMax : la profondeur de l'arbre des possibles.
+```
 
-On a l'habitude de représenter l'ensembe des disposition de plateau par un graphe, et à chaque noeud correspond un état de plateau.
+Cette fonction permet de **remonter les scores de visites et de victoire** sur toutes les nodes de la branche. Pour cela, on définit une node auxilaire qui est la node en cours et on lui incrémente son score de visite et son score de victoire si et seulement si le joueur contenu dans cette node est notre bot et que le joueur gagnant est notre bot.
 
-![Arbre des possibles](./assets/arbre.png)
+Ensuite, on définit la nodeAux comme étant le parent de la node en cours et on répète cette opération tant que la nodeAux éxiste ( diférente de null).
+
+### Fonction findBestChild
+
+```java
+public Node findBestChild(Node root) {
+        ArrayList<Node> children = root.getChildArray();
+        int max = 0;
+        Node bestNode = new Node();
+        for (int i = 0; i < children.size(); i++) {
+
+            if (children.get(i).getNbVisite() > max) {
+                max = children.get(i).getNbVisite();
+                bestNode = children.get(i);
+            }
+        }
+
+        return bestNode;
+    }
+```
+
+Cette fonction permet de trouver le meilleur coup à jouer lorsque l'algorithme a terminé de réaliser toutes les itérations pour générer l'arbre.
+
+Tout simplement, elle retourne la node enfant de la node root de l'arbre qui possède le plus de visite. C'est le coup contenu dans cette node qui est le meilleur à jouer.
+
+## Nos sources
+
+Vous trouverez ci-dessous une liste de nos principales sources pour réaliser ce projet :
+
+### Sites internet
+
+- [Wikipédia ](https://en.wikipedia.org/wiki/Monte_Carlo_tree_search#Pure_Monte_Carlo_game_search)
+- [SANDIPANWEB](https://sandipanweb.wordpress.com/2017/03/26/using-monte-carlo-simulation-to-play-tictactoe-in-computer/)
+- [Deakos Data Science](http://matthewdeakos.me/2018/03/10/monte-carlo-tree-search/)
+- [Baeldung](https://www.baeldung.com/java-monte-carlo-tree-search)
+
+### Vidéos Youtube
+
+- [SANDIPANWEB](https://sandipanweb.wordpress.com/2017/03/26/using-monte-carlo-simulation-to-play-tictactoe-in-computer/)
+- [Monte Carlo Tree Search](https://www.youtube.com/watch?v=UXW2yZndl7U&ab_channel=JohnLevine)
+- [Algorithms Explained – minimax and alpha-beta pruning ](https://www.youtube.com/watch?v=l-hh51ncgDI&ab_channel=SebastianLague)

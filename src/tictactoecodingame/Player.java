@@ -12,23 +12,21 @@ public class Player {
 
     public static void main(String args[]) {
 
-        JoueurOrdi minimaxjoeur = new JoueurOrdi("minimax");
-        JoueurOrdi joueurOrdi = new JoueurOrdi("monte");
+        JoueurOrdi minimaxJoueur = new JoueurOrdi("Minimax");
+        JoueurOrdi monteCarloJoueur = new JoueurOrdi("MonteCarlo");
 
-        JoueurHumain moi = new JoueurHumain("Romain");
-        AlgoMiniMax9x9 minmax = new AlgoMiniMax9x9(minimaxjoeur, joueurOrdi);
+        AlgoMinimax minmax = new AlgoMinimax(minimaxJoueur, monteCarloJoueur);
+        AlgoRechercheMonteCarlo monte = new AlgoRechercheMonteCarlo(minimaxJoueur, monteCarloJoueur);
 
-        GrilleTicTacToe9x9 grille9 = new GrilleTicTacToe9x9();
+        GrilleTicTacToe3x3 grille3 = new GrilleTicTacToe3x3();
 
         // Remplacer ici l'algorithme aléatoire par votre algorithme.
         // Créer une nouvelle classe qui hérite de la class AlgoRecherche
-        AlgoRechercheMonteCarlo monte = new AlgoRechercheMonteCarlo(minimaxjoeur, joueurOrdi); // L'ordinateur joue au
-        // hasard
-        joueurOrdi.setAlgoRecherche(monte);
-        minimaxjoeur.setAlgoRecherche(minmax);
-        GrilleTicTacToe3x3 grille2 = new GrilleTicTacToe3x3();
 
-        Arbitre a = new Arbitre(grille9, joueurOrdi, minimaxjoeur);
+        monteCarloJoueur.setAlgoRecherche(monte);
+        minimaxJoueur.setAlgoRecherche(minmax);
+
+        Arbitre a = new Arbitre(grille3, monteCarloJoueur, minimaxJoueur);
 
         // a.startNewGame(true); // Demarre une partie en affichant la grille du jeu
 
