@@ -35,9 +35,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         ArrayList<Node> childArray = new ArrayList<Node>();
 
         // on selection a chaque étage de l'arbre
-        // int nbCoup = 0;
         while (!root.getChildArray().isEmpty() && _plateau.partieTerminee() == false) {
-            // System.out.println(nbCoup++);
             childArray = root.getChildArray();
             // update all uct scores
             childArray.forEach(node -> {
@@ -48,15 +46,7 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
             // get node with max uct score
             root = Collections.max(childArray);
             _plateau.joueCoup(root.getCoup());
-            System.out.println(_plateau);
-            System.out.println(_plateau.vainqueur());
-            System.out.println(_plateau.partieTerminee());
-            // System.out.println(_plateau);
-
         }
-        System.out.println("\n-----\n");
-
-        // System.out.println("\n----------------\n");
         return root;
     }
 
@@ -93,8 +83,9 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
          * System.out.println("\n-----\n");
          */
         if (_plateau.vainqueur() == this.ennemi) {
-            node.setMinimumValeur();
-            System.out.println("set minimum score, vainqueur is : " + _plateau.vainqueur());
+            if (node.getParent() != null) {
+                node.getParent().setMinimumValeur();
+            }
             return _plateau.vainqueur();
         }
 
@@ -140,10 +131,10 @@ public class AlgoRechercheMonteCarlo extends AlgoRecherche {
         Node bestNode = new Node();
         for (int i = 0; i < children.size(); i++) {
             System.out.println("coup :" + children.get(i).getCoup() + " - nbdevisite :" + children.get(i).getNbVisite()
-                    + " - nb de victoire : " + children.get(i).getScoreVictoire() + " joueur : "
+                    + " - nb de victoire : " + children.get(i).getNbVisite() + " joueur : "
                     + children.get(i).getJoueur());
-            if (children.get(i).getScoreVictoire() > max) {
-                max = children.get(i).getScoreVictoire();
+            if (children.get(i).getNbVisite() > max) {
+                max = children.get(i).getNbVisite();
                 bestNode = children.get(i);
             }
         }

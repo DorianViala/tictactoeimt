@@ -22,7 +22,7 @@ public class Player {
 
         // Remplacer ici l'algorithme aléatoire par votre algorithme.
         // Créer une nouvelle classe qui hérite de la class AlgoRecherche
-        AlgoRechercheMonteCarlo monte = new AlgoRechercheMonteCarlo(humain, joueurOrdi); // L'ordinateur joue au hasard
+        AlgoRechercheMonteCarlo monte = new AlgoRechercheMonteCarlo(moi, joueurOrdi); // L'ordinateur joue au hasard
         joueurOrdi.setAlgoRecherche(monte);
         GrilleTicTacToe3x3 grille2 = new GrilleTicTacToe3x3();
 
