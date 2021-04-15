@@ -5,8 +5,18 @@
 ## Sommaire
 
 - [Algorithme de MonteCarlo](#MonteCarlo)
+
   - [Fonction de sélection](#fonction-de-sélection)
   - [Fonction expansion](#fonction-expansion)
+
+- [Algorithme MinMax](#MinMax)
+
+  - [Fonctionnement de l'Algorithme](#fonctionnement-algorithme)
+  - [Fonction d'évaluation](#fonction-evaluation)
+  - [Implémentation](#implémentation)
+  - [Pruning](#pruning)
+
+- [Sources](#sources)
 
 ## MonteCarlo
 
@@ -208,3 +218,14 @@ et enfin joue ce coup sur le plateau.
 Lorsque la partie est terminée, cette fonction retourne le vainqueur.
 
 ### Fontion de back
+
+## MinMax
+
+L'algorithme MinMax est un algorithme qui s'applique pour les jeux à 2 joueurs et à information complète.
+
+Il amène l'ordinateur à tester tous les coups dont il dispose et à leur attribuer un score. L'ordinateur sélectionne donc le coup avec le meilleur score.
+Pour affecter à un coup un score, l'algorithme va alterner entre chaque joueur un certain nombre de fois. Ce nombre de fois est déterminer par le seul et unique paramètre de l'algorithme MinMax : la profondeur de l'arbre des possibles.
+
+On a l'habitude de représenter l'ensembe des disposition de plateau par un graphe, et à chaque noeud correspond un état de plateau.
+
+![Arbre des possibles](./assets/arbre.png)
