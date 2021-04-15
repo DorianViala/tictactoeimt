@@ -1,15 +1,15 @@
 # TicTacToe
 
-## MonteCarlo 
+## MonteCarlo
 
-L'algorithme de MonteCarlo est une algorithme qui explore l'arbre des possibles. Il se déroule en 4 étapes principales qui sont répétées un grand nombre de fois. Ces 4 étapes sont les suivantes :  
+L'algorithme de MonteCarlo est une algorithme qui explore l'arbre des possibles. Il se déroule en 4 étapes principales qui sont répétées un grand nombre de fois. Ces 4 étapes sont les suivantes :
 
 - la sélection
 - l'expansion
-- la simulation 
+- la simulation
 - la rétropropagation
 
-Dans notre code, ces 4 étapes se traduisent de la manière suivante : 
+Dans notre code, ces 4 étapes se traduisent de la manière suivante :
 
 ```java
 public Coup meilleurCoup(Plateau _plateau, Joueur _joueur, boolean _ponder) {
@@ -42,9 +42,9 @@ public Coup meilleurCoup(Plateau _plateau, Joueur _joueur, boolean _ponder) {
     }
 ```
 
-Dans premier temps, nous initialisons notre `arbre` avec comme root un `node`. 
+Dans premier temps, nous initialisons notre `arbre` avec comme root un `node`.
 
-La classe `Node.java` stocke les informations suivantes: 
+La classe `Node.java` stocke les informations suivantes:
 
 ```java
 public class Node implements Comparable<Node> {
@@ -80,6 +80,7 @@ private Node selection(Node root, Plateau _plateau) {
         return root;
     }
 ```
+
 Le but de la fonction sélection est de sélectionner succesivement les noeud de l'arbre jusqu'à arriver à une feuille. Pour sélectionner les nodes, on utilise le score UCT. Ce score permet de faire un compromis entre l'exploitation d'une node qui nous fait gagner souvent et l'exploration de node qui pourrait nous faire gagner.
 
 Pour sélectionner le score UCT maximum, nous avons étendu la classe `Node` en `Comparable`. Cela nous permet de définir la fonction `CompareTo` dans notre Node qui va comparer le score UCT maximum.
@@ -103,4 +104,62 @@ Ensuite, dans notre fonction sélection, il nous reste plus qu'à mettre à jour
 root = Collections.max(childArray);
 ```
 
+Ensuite, dans notre fonction sélection, il nous reste plus qu'à mettre à jour les scores UCT et sélectionner le node avec le score maximum.
 
+```java
+root = Collections.max(childArray);
+```
+
+### Fonction de simulation
+
+```java
+  // permet de simuler une partie à partir d'une node
+    private Joueur simulation(Node node, Plateau _plateau) {
+
+        Joueur joueurEnCours = node.getJoueur();
+        _plateau.joueCoup(node.getCoup());
+
+        if (_plateau.vainqueur() == this.ennemi) {
+            node.setScoreVictoire(Integer.MAX_VALUE);
+            return _plateau.vainqueur();
+        }
+
+        while (!_plateau.partieTerminee()) {
+            // changer le jouer en cours
+            joueurEnCours = getJoueurEnnemi(joueurEnCours);
+            ArrayList<Coup> coupPossible = _plateau.getListeCoups(joueurEnCours);
+            // joue un coup aléatoire
+            Coup coupjoue = coupPossible.get(rnd.nextInt(coupPossible.size()));
+            _plateau.joueCoup(coupjoue);
+        }
+        return _plateau.vainqueur();
+    }
+```
+
+Le but de cette fonction est de faire jouer les deux joueurs de manière aléatoire à partir d'une node particulière.
+Tout d'abord, on récupère la node passée en paramètre (celle retourné par la pahse d'expension) et on **joue le coup** contenu dans cette node afin de **mettre le plateau à jour**.
+
+Ensuite, on vérifie si, après ce coup, **la partie est terminée et si le vainqueur et notre ennemi** (ici `this.ennemi`). Si c'est le cas, on va attribuer comme score de victoire à cette node la valeur maximale `Integer.MAX_VALUE`. Cette action favorise l'algorithme à choisir cette node lorsque l'on se retrouvera dans une phase de séléction sur la node parent lors d'une autre itération, et donc de **toujours incrémenter le score de visite mais pas celui de victoire** sur toutes les nodes de cette branche lors de la phase de Backpropagation, ce qui entrainera l'algorithme à **choisir un autre coup que celui-la** lors de la phase de séléction au niveau de la root de l'arbre.
+
+Sinon, tant que la partie terminée, la fonction change le joueur en cours avec `getJoueurEnnemi` :
+
+```java
+ private Joueur getJoueurEnnemi(Joueur joueurEnCours) {
+        if (joueurEnCours == this.ennemi) {
+            return this.bot;
+        }
+        return this.ennemi;
+    }
+```
+
+,lui attribue ensuite un coup choisi aléatoirement dans sa liste de coups disponible :
+
+```java
+Coup coupjoue = coupPossible.get(rnd.nextInt(coupPossible.size()));
+```
+
+et enfin joue ce coup sur le plateau.
+
+Lorsque la partie est terminée, cette fonction retourne le vainqueur.
+
+### Fontion de back
