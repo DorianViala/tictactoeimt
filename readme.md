@@ -562,6 +562,5 @@ Vous trouverez ci-dessous une liste de nos principales sources pour réaliser ce
 
 ### Vidéos Youtube
 
-- [SANDIPANWEB](https://sandipanweb.wordpress.com/2017/03/26/using-monte-carlo-simulation-to-play-tictactoe-in-computer/)
 - [Monte Carlo Tree Search](https://www.youtube.com/watch?v=UXW2yZndl7U&ab_channel=JohnLevine)
 - [Algorithms Explained – minimax and alpha-beta pruning ](https://www.youtube.com/watch?v=l-hh51ncgDI&ab_channel=SebastianLague)
